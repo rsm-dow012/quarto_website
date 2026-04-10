@@ -4,7 +4,7 @@
     "docker-compose-k8s.yml"
   ],
   "service": "rsm-msba",
-  "workspaceFolder": "/home/jovyan/git/quarto_website",
+  "workspaceFolder": "/home/jovyan/Desktop/quarto_website",
   "remoteUser": "jovyan",
   "overrideCommand": false,
   "shutdownAction": "none",
