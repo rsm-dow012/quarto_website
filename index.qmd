@@ -1,0 +1,19 @@
+---
+title: "Dongjun Wang"
+image: "profile_pic.jpg"
+about:
+  template: jolla
+  links:
+    - icon: envelope
+      href: mailto:wangdj935@gmail.com
+    - icon: linkedin
+      href: https://www.linkedin.com/in/dongjun-wang-a479aa24b
+---
+
+Welcome to my website!
+
+You can call me Tommy Wang. I graduated from Lehigh University majoring in Business Analytics. I am currently an MSBA student at University of California, San Diego.
+
+**Email:** [wangdj935@gmail.com](mailto:wangdj935@gmail.com)
+
+**Phone:** [(484) 719-3636](tel:+14847193636)
