@@ -355,7 +355,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:your@email.com"> <i class="bi bi-envelope" role="img">
+    <a class="nav-link" href="mailto:wangdj935@gmail.com"> <i class="bi bi-envelope" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -431,22 +431,22 @@ window.Quarto = {
 </section>
 <section id="the-ab-test-as-a-statistical-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-ab-test-as-a-statistical-problem">The A/B Test as a Statistical Problem</h2>
-<p>We can express this A/B test using a simple statistical model. Each visitor either signs up or does not sign up, so each outcome is binary. That means it is natural to model each observation as a Bernoulli random variable with parameter (), where () is the probability of signing up.</p>
-<p>Let (X_{Ai}) be the outcome for visitor (i) in group A and (X_{Bi}) the outcome for visitor (i) in group B. Each of these variables takes value 1 if the visitor signs up and 0 otherwise. Because the CTA wording may influence behavior, I allow the sign-up probability to differ across the two groups. Visitors who see CTA A have probability (_A) of signing up, while visitors who see CTA B have probability (_B).</p>
+<p>We can express this A/B test using a simple statistical model. Each visitor either signs up or does not sign up, so each outcome is binary. That means it is natural to model each observation as a Bernoulli random variable with parameter <span class="math inline">\(\pi\)</span>, where <span class="math inline">\(\pi\)</span> is the probability of signing up.</p>
+<p>Let <span class="math inline">\(X_{Ai}\)</span> be the outcome for visitor <span class="math inline">\(i\)</span> in group A and <span class="math inline">\(X_{Bi}\)</span> the outcome for visitor <span class="math inline">\(i\)</span> in group B. Each of these variables takes value 1 if the visitor signs up and 0 otherwise. Because the CTA wording may influence behavior, I allow the sign-up probability to differ across the two groups. Visitors who see CTA A have probability <span class="math inline">\(\pi_A\)</span> of signing up, while visitors who see CTA B have probability <span class="math inline">\(\pi_B\)</span>.</p>
 <p>The quantity I care about is the difference in sign-up rates between the two CTAs:</p>
 <p><span class="math display">\[
 \theta = \pi_A - \pi_B
 \]</span></p>
-<p>If (&gt; 0), CTA A performs better. If (&lt; 0), CTA B performs better. To estimate this difference from data, I use the difference in sample means:</p>
+<p>If <span class="math inline">\(\theta &gt; 0\)</span>, CTA A performs better. If <span class="math inline">\(\theta &lt; 0\)</span>, CTA B performs better. To estimate this difference from data, I use the difference in sample means:</p>
 <p><span class="math display">\[
 \hat\theta = \bar{X}_A - \bar{X}_B
 \]</span></p>
-<p>Since each observation is either 0 or 1, the sample mean in each group is simply the sample proportion who signed up. So ({X}_A = _A) and ({X}_B = _B), which means the estimator is just the observed difference in conversion rates.</p>
+<p>Since each observation is either 0 or 1, the sample mean in each group is simply the sample proportion who signed up. So <span class="math inline">\(\bar{X}_A = \hat\pi_A\)</span> and <span class="math inline">\(\bar{X}_B = \hat\pi_B\)</span>, which means the estimator is just the observed difference in conversion rates.</p>
 </section>
 <section id="simulating-data" class="level2">
 <h2 class="anchored" data-anchor-id="simulating-data">Simulating Data</h2>
-<p>In a real A/B test, I would not know the true values of (_A) and (_B). I would only observe the sample outcomes and try to infer the underlying sign-up probabilities. For this exercise, though, it is useful to set the true values ourselves so we can study how the estimator behaves when the truth is known.</p>
-<p>Suppose the true sign-up probability under CTA A is (_A = 0.22) and the true sign-up probability under CTA B is (_B = 0.18). Then the true treatment effect is</p>
+<p>In a real A/B test, I would not know the true values of <span class="math inline">\(\pi_A\)</span> and <span class="math inline">\(\pi_B\)</span>. I would only observe the sample outcomes and try to infer the underlying sign-up probabilities. For this exercise, though, it is useful to set the true values ourselves so we can study how the estimator behaves when the truth is known.</p>
+<p>Suppose the true sign-up probability under CTA A is <span class="math inline">\(\pi_A = 0.22\)</span> and the true sign-up probability under CTA B is <span class="math inline">\(\pi_B = 0.18\)</span>. Then the true treatment effect is</p>
 <p><span class="math display">\[
 \theta = \pi_A - \pi_B = 0.04
 \]</span></p>
@@ -508,7 +508,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Using this simulated dataset, the observed difference in sign-up rates is my estimate of ().</p>
+<p>Using this simulated dataset, the observed difference in sign-up rates is my estimate of <span class="math inline">\(\theta\)</span>.</p>
 <div id="cell-estimated-difference" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame({</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Quantity"</span>: [<span class="st">"True difference"</span>, <span class="st">"Estimated difference"</span>],</span>
@@ -546,7 +546,7 @@ window.Quarto = {
 </section>
 <section id="the-law-of-large-numbers" class="level2">
 <h2 class="anchored" data-anchor-id="the-law-of-large-numbers">The Law of Large Numbers</h2>
-<p>The Law of Large Numbers says that as the sample size grows, the sample mean converges to the population mean. In this setting, that matters because the sign-up rate in each group is a sample mean. As I observe more visitors, ({X}_A) should get closer to (_A) and ({X}_B) should get closer to (_B). Since my estimator is the difference of these two sample means, the Law of Large Numbers is what gives me confidence that (= {X}_A - {X}_B) will be close to the true () when the sample is large.</p>
+<p>The Law of Large Numbers says that as the sample size grows, the sample mean converges to the population mean. In this setting, that matters because the sign-up rate in each group is a sample mean. As I observe more visitors, <span class="math inline">\(\bar{X}_A\)</span> should get closer to <span class="math inline">\(\pi_A\)</span> and <span class="math inline">\(\bar{X}_B\)</span> should get closer to <span class="math inline">\(\pi_B\)</span>. Since my estimator is the difference of these two sample means, the Law of Large Numbers is what gives me confidence that <span class="math inline">\(\hat\theta = \bar{X}_A - \bar{X}_B\)</span> will be close to the true <span class="math inline">\(\theta\)</span> when the sample is large.</p>
 <p>To illustrate this, I compute the element-wise differences between the simulated CTA A outcomes and CTA B outcomes, producing a vector of 1,000 values. I then calculate the cumulative average of those differences and plot it against the number of observations.</p>
 <div id="cell-lln-plot" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
@@ -649,12 +649,12 @@ window.Quarto = {
 </div>
 </div>
 <p>The bootstrapped standard error and the analytical standard error should be quite close. That is reassuring because they are obtained in different ways. The analytical standard error uses the Bernoulli variance formula, while the bootstrap estimates variability by resampling the observed data. When the two are similar, it suggests that the uncertainty estimate is stable and sensible.</p>
-<p>Using the bootstrapped standard error, I construct a 95% confidence interval as ( SE_{}). This interval gives a range of plausible values for the true treatment effect. If the interval lies entirely above zero, it suggests that CTA A has a genuinely higher sign-up rate than CTA B. If the interval includes zero, the data are also consistent with no true difference.</p>
+<p>Using the bootstrapped standard error, I construct a 95% confidence interval as <span class="math inline">\(\hat\theta \pm 1.96 \times SE_{\text{boot}}\)</span>. This interval gives a range of plausible values for the true treatment effect. If the interval lies entirely above zero, it suggests that CTA A has a genuinely higher sign-up rate than CTA B. If the interval includes zero, the data are also consistent with no true difference.</p>
 </section>
 <section id="the-central-limit-theorem" class="level2">
 <h2 class="anchored" data-anchor-id="the-central-limit-theorem">The Central Limit Theorem</h2>
-<p>The Central Limit Theorem says that regardless of the shape of the underlying population distribution, the sampling distribution of the sample mean becomes approximately Normal as the sample size grows. Since my estimator is a difference in sample means, the same idea applies here. Even though each individual observation is Bernoulli and therefore takes only the values 0 or 1, the distribution of () becomes more bell-shaped when the sample size is large.</p>
-<p>To demonstrate this, I consider four different sample sizes: (n {25, 50, 100, 500}). For each sample size, I repeatedly simulate 1,000 A/B tests, compute () each time, and then plot a histogram of those 1,000 estimates.</p>
+<p>The Central Limit Theorem says that regardless of the shape of the underlying population distribution, the sampling distribution of the sample mean becomes approximately Normal as the sample size grows. Since my estimator is a difference in sample means, the same idea applies here. Even though each individual observation is Bernoulli and therefore takes only the values 0 or 1, the distribution of <span class="math inline">\(\hat\theta\)</span> becomes more bell-shaped when the sample size is large.</p>
+<p>To demonstrate this, I consider four different sample sizes: <span class="math inline">\(n \in \{25, 50, 100, 500\}\)</span>. For each sample size, I repeatedly simulate 1,000 A/B tests, compute <span class="math inline">\(\hat\theta\)</span> each time, and then plot a histogram of those 1,000 estimates.</p>
 <div id="cell-clt-simulation" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div id="clt-simulation" class="quarto-figure quarto-figure-center anchored">
@@ -683,7 +683,7 @@ H_1: \theta \neq 0
 <p><span class="math display">\[
 z = \frac{\hat\theta - 0}{SE(\hat\theta)}
 \]</span></p>
-<p>This standardization is important. By the Central Limit Theorem, () is approximately Normally distributed in large samples. Under the null hypothesis, that distribution is centered at zero. When I divide by the standard deviation, the result is approximately standard Normal, so under (H_0) I have (z ;; N(0,1)). Once I know the null distribution of the test statistic, I can compute a p-value.</p>
+<p>This standardization is important. By the Central Limit Theorem, <span class="math inline">\(\hat\theta\)</span> is approximately Normally distributed in large samples. Under the null hypothesis, that distribution is centered at zero. When I divide by the standard deviation, the result is approximately standard Normal, so under <span class="math inline">\(H_0\)</span> I have <span class="math inline">\(z \dot\sim N(0,1)\)</span>. Once I know the null distribution of the test statistic, I can compute a p-value.</p>
 <p>This procedure is sometimes casually called a t-test, though that label is slightly loose here. The classical t-test arises when the data are drawn from a Normal distribution and the variance is estimated from the sample, which produces an exact t-distribution. In my setting, the data are Bernoulli rather than Normal, so there is no exact t-distribution result. What justifies the test is the Central Limit Theorem, which gives approximate Normality in large samples. Since I also estimate the standard error from the data, the procedure resembles a large-sample z-test. In practice, for large samples the t-distribution and standard Normal distribution are extremely similar, so the distinction has little practical effect, though it is still conceptually important.</p>
 <div id="cell-hypothesis-test-results" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> theta_hat <span class="op">/</span> analytic_se</span>
@@ -737,11 +737,11 @@ z = \frac{\hat\theta - 0}{SE(\hat\theta)}
 <section id="the-t-test-as-a-regression" class="level2">
 <h2 class="anchored" data-anchor-id="the-t-test-as-a-regression">The T-Test as a Regression</h2>
 <p>It turns out that the two-sample test I just ran is mathematically equivalent to a simple linear regression. This connection is useful because it shows that regression software can perform the same hypothesis test, and it also points toward more flexible designs with additional controls or treatment groups.</p>
-<p>To set this up, I stack the two groups into one dataset. I create an outcome variable (Y_i), which equals 1 if visitor (i) signs up and 0 otherwise, and a treatment indicator (D_i), which equals 1 if the visitor saw CTA A and 0 if the visitor saw CTA B. Then I estimate the regression</p>
+<p>To set this up, I stack the two groups into one dataset. I create an outcome variable <span class="math inline">\(Y_i\)</span>, which equals 1 if visitor <span class="math inline">\(i\)</span> signs up and 0 otherwise, and a treatment indicator <span class="math inline">\(D_i\)</span>, which equals 1 if the visitor saw CTA A and 0 if the visitor saw CTA B. Then I estimate the regression</p>
 <p><span class="math display">\[
 Y_i = \beta_0 + \beta_1 D_i + \varepsilon_i
 \]</span></p>
-<p>The interpretation is straightforward. When (D_i = 0), the expected value of (Y_i) is (_0), so (_0) estimates the mean outcome in group B, which is (_B). When (D_i = 1), the expected value of (Y_i) is (_0 + _1), so that quantity estimates the mean outcome in group A, which is (_A). Therefore (_1 = _A - _B = ), and the OLS estimate (_1) should be numerically identical to ().</p>
+<p>The interpretation is straightforward. When <span class="math inline">\(D_i = 0\)</span>, the expected value of <span class="math inline">\(Y_i\)</span> is <span class="math inline">\(\beta_0\)</span>, so <span class="math inline">\(\beta_0\)</span> estimates the mean outcome in group B, which is <span class="math inline">\(\pi_B\)</span>. When <span class="math inline">\(D_i = 1\)</span>, the expected value of <span class="math inline">\(Y_i\)</span> is <span class="math inline">\(\beta_0 + \beta_1\)</span>, so that quantity estimates the mean outcome in group A, which is <span class="math inline">\(\pi_A\)</span>. Therefore <span class="math inline">\(\beta_1 = \pi_A - \pi_B = \theta\)</span>, and the OLS estimate <span class="math inline">\(\hat\beta_1\)</span> should be numerically identical to <span class="math inline">\(\hat\theta\)</span>.</p>
 <div id="cell-regression-test" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.concatenate([A, B])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> np.concatenate([np.ones(n_A), np.zeros(n_B)])</span>
@@ -850,9 +850,9 @@ Y_i = \beta_0 + \beta_1 D_i + \varepsilon_i
 </section>
 <section id="the-problem-with-peeking" class="level2">
 <h2 class="anchored" data-anchor-id="the-problem-with-peeking">The Problem with Peeking</h2>
-<p>Suppose my boss is impatient and wants to peek at the results repeatedly before the experiment is finished. Instead of waiting until all 1,000 visitors have been assigned to each group, she wants to test after every 100 visitors per group. That means running 10 hypothesis tests in a single experiment, at (n = 100, 200, 300, , 1000), and stopping early if any one of those tests is significant at the 0.05 level.</p>
-<p>This is a problem under classical frequentist statistics because each additional look at the data creates another opportunity for a false positive. A single test at significance level (= 0.05) has a 5 percent chance of incorrectly rejecting the null when the null is actually true. If I test repeatedly on accumulating data, the overall probability of seeing at least one significant result rises above 5 percent. In other words, peeking inflates the Type I error rate.</p>
-<p>To show this, I simulate a world in which the null hypothesis is true. I set (_A = _B = 0.20), so there is actually no difference between the two CTAs. In each simulated experiment, I generate 1,000 observations for group A and 1,000 for group B. After every 100 observations per group, I compute the z-statistic and p-value and record whether any of the 10 p-values falls below 0.05. I then repeat the entire experiment 10,000 times.</p>
+<p>Suppose my boss is impatient and wants to peek at the results repeatedly before the experiment is finished. Instead of waiting until all 1,000 visitors have been assigned to each group, she wants to test after every 100 visitors per group. That means running 10 hypothesis tests in a single experiment, at <span class="math inline">\(n = 100, 200, 300, \ldots, 1000\)</span>, and stopping early if any one of those tests is significant at the 0.05 level.</p>
+<p>This is a problem under classical frequentist statistics because each additional look at the data creates another opportunity for a false positive. A single test at significance level <span class="math inline">\(\alpha = 0.05\)</span> has a 5 percent chance of incorrectly rejecting the null when the null is actually true. If I test repeatedly on accumulating data, the overall probability of seeing at least one significant result rises above 5 percent. In other words, peeking inflates the Type I error rate.</p>
+<p>To show this, I simulate a world in which the null hypothesis is true. I set <span class="math inline">\(\pi_A = \pi_B = 0.20\)</span>, so there is actually no difference between the two CTAs. In each simulated experiment, I generate 1,000 observations for group A and 1,000 for group B. After every 100 observations per group, I compute the z-statistic and p-value and record whether any of the 10 p-values falls below 0.05. I then repeat the entire experiment 10,000 times.</p>
 <div id="cell-peeking-simulation" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">1234</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -921,7 +921,7 @@ Y_i = \beta_0 + \beta_1 D_i + \varepsilon_i
 </div>
 </div>
 </div>
-<p>I can also summarize the peeking rule in plain language. Even when there is truly no difference between CTA A and CTA B, repeated testing makes it much more likely that I will eventually see a “significant” result just by chance. The empirical false positive rate from the simulation is therefore noticeably larger than the nominal 5 percent level attached to a single test.</p>
+<p>I can also summarize the peeking rule in plain language. Even when there is truly no difference between CTA A and CTA B, repeated testing makes it much more likely that I will eventually see a significant result just by chance. The empirical false positive rate from the simulation is therefore noticeably larger than the nominal 5 percent level attached to a single test.</p>
 <p>In practice, this means that stopping rules matter. If analysts want to monitor an experiment over time, they should use methods specifically designed for sequential testing. Otherwise, repeated peeking can make an ordinary A/B test look more convincing than it really is and lead to false discoveries.</p>
 
 
@@ -1353,7 +1353,7 @@ Y_i = \beta_0 + \beta_1 D_i + \varepsilon_i
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>© 2026 Tommy. Built with Quarto.</p>
+<p>© 2026 Dongjun Wang. Built with Quarto.</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

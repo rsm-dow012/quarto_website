@@ -27,9 +27,9 @@ To answer that question, I run an A/B test. In an A/B test, visitors are randoml
 
 ## The A/B Test as a Statistical Problem
 
-We can express this A/B test using a simple statistical model. Each visitor either signs up or does not sign up, so each outcome is binary. That means it is natural to model each observation as a Bernoulli random variable with parameter \(\pi\), where \(\pi\) is the probability of signing up.
+We can express this A/B test using a simple statistical model. Each visitor either signs up or does not sign up, so each outcome is binary. That means it is natural to model each observation as a Bernoulli random variable with parameter $\pi$, where $\pi$ is the probability of signing up.
 
-Let \(X_{Ai}\) be the outcome for visitor \(i\) in group A and \(X_{Bi}\) the outcome for visitor \(i\) in group B. Each of these variables takes value 1 if the visitor signs up and 0 otherwise. Because the CTA wording may influence behavior, I allow the sign-up probability to differ across the two groups. Visitors who see CTA A have probability \(\pi_A\) of signing up, while visitors who see CTA B have probability \(\pi_B\).
+Let $X_{Ai}$ be the outcome for visitor $i$ in group A and $X_{Bi}$ the outcome for visitor $i$ in group B. Each of these variables takes value 1 if the visitor signs up and 0 otherwise. Because the CTA wording may influence behavior, I allow the sign-up probability to differ across the two groups. Visitors who see CTA A have probability $\pi_A$ of signing up, while visitors who see CTA B have probability $\pi_B$.
 
 The quantity I care about is the difference in sign-up rates between the two CTAs:
 
@@ -37,19 +37,19 @@ $$
 \theta = \pi_A - \pi_B
 $$
 
-If \(\theta > 0\), CTA A performs better. If \(\theta < 0\), CTA B performs better. To estimate this difference from data, I use the difference in sample means:
+If $\theta > 0$, CTA A performs better. If $\theta < 0$, CTA B performs better. To estimate this difference from data, I use the difference in sample means:
 
 $$
 \hat\theta = \bar{X}_A - \bar{X}_B
 $$
 
-Since each observation is either 0 or 1, the sample mean in each group is simply the sample proportion who signed up. So \(\bar{X}_A = \hat\pi_A\) and \(\bar{X}_B = \hat\pi_B\), which means the estimator is just the observed difference in conversion rates.
+Since each observation is either 0 or 1, the sample mean in each group is simply the sample proportion who signed up. So $\bar{X}_A = \hat\pi_A$ and $\bar{X}_B = \hat\pi_B$, which means the estimator is just the observed difference in conversion rates.
 
 ## Simulating Data
 
-In a real A/B test, I would not know the true values of \(\pi_A\) and \(\pi_B\). I would only observe the sample outcomes and try to infer the underlying sign-up probabilities. For this exercise, though, it is useful to set the true values ourselves so we can study how the estimator behaves when the truth is known.
+In a real A/B test, I would not know the true values of $\pi_A$ and $\pi_B$. I would only observe the sample outcomes and try to infer the underlying sign-up probabilities. For this exercise, though, it is useful to set the true values ourselves so we can study how the estimator behaves when the truth is known.
 
-Suppose the true sign-up probability under CTA A is \(\pi_A = 0.22\) and the true sign-up probability under CTA B is \(\pi_B = 0.18\). Then the true treatment effect is
+Suppose the true sign-up probability under CTA A is $\pi_A = 0.22$ and the true sign-up probability under CTA B is $\pi_B = 0.18$. Then the true treatment effect is
 
 $$
 \theta = \pi_A - \pi_B = 0.04
@@ -83,7 +83,7 @@ summary_table = pd.DataFrame({
 summary_table
 ```
 
-Using this simulated dataset, the observed difference in sign-up rates is my estimate of \(\theta\).
+Using this simulated dataset, the observed difference in sign-up rates is my estimate of $\theta$.
 
 ```{python}
 #| label: estimated-difference
@@ -96,7 +96,7 @@ pd.DataFrame({
 
 ## The Law of Large Numbers
 
-The Law of Large Numbers says that as the sample size grows, the sample mean converges to the population mean. In this setting, that matters because the sign-up rate in each group is a sample mean. As I observe more visitors, \(\bar{X}_A\) should get closer to \(\pi_A\) and \(\bar{X}_B\) should get closer to \(\pi_B\). Since my estimator is the difference of these two sample means, the Law of Large Numbers is what gives me confidence that \(\hat\theta = \bar{X}_A - \bar{X}_B\) will be close to the true \(\theta\) when the sample is large.
+The Law of Large Numbers says that as the sample size grows, the sample mean converges to the population mean. In this setting, that matters because the sign-up rate in each group is a sample mean. As I observe more visitors, $\bar{X}_A$ should get closer to $\pi_A$ and $\bar{X}_B$ should get closer to $\pi_B$. Since my estimator is the difference of these two sample means, the Law of Large Numbers is what gives me confidence that $\hat\theta = \bar{X}_A - \bar{X}_B$ will be close to the true $\theta$ when the sample is large.
 
 To illustrate this, I compute the element-wise differences between the simulated CTA A outcomes and CTA B outcomes, producing a vector of 1,000 values. I then calculate the cumulative average of those differences and plot it against the number of observations.
 
@@ -187,13 +187,13 @@ plt.show()
 
 The bootstrapped standard error and the analytical standard error should be quite close. That is reassuring because they are obtained in different ways. The analytical standard error uses the Bernoulli variance formula, while the bootstrap estimates variability by resampling the observed data. When the two are similar, it suggests that the uncertainty estimate is stable and sensible.
 
-Using the bootstrapped standard error, I construct a 95% confidence interval as \(\hat\theta \pm 1.96 \times SE_{\text{boot}}\). This interval gives a range of plausible values for the true treatment effect. If the interval lies entirely above zero, it suggests that CTA A has a genuinely higher sign-up rate than CTA B. If the interval includes zero, the data are also consistent with no true difference.
+Using the bootstrapped standard error, I construct a 95% confidence interval as $\hat\theta \pm 1.96 \times SE_{\text{boot}}$. This interval gives a range of plausible values for the true treatment effect. If the interval lies entirely above zero, it suggests that CTA A has a genuinely higher sign-up rate than CTA B. If the interval includes zero, the data are also consistent with no true difference.
 
 ## The Central Limit Theorem
 
-The Central Limit Theorem says that regardless of the shape of the underlying population distribution, the sampling distribution of the sample mean becomes approximately Normal as the sample size grows. Since my estimator is a difference in sample means, the same idea applies here. Even though each individual observation is Bernoulli and therefore takes only the values 0 or 1, the distribution of \(\hat\theta\) becomes more bell-shaped when the sample size is large.
+The Central Limit Theorem says that regardless of the shape of the underlying population distribution, the sampling distribution of the sample mean becomes approximately Normal as the sample size grows. Since my estimator is a difference in sample means, the same idea applies here. Even though each individual observation is Bernoulli and therefore takes only the values 0 or 1, the distribution of $\hat\theta$ becomes more bell-shaped when the sample size is large.
 
-To demonstrate this, I consider four different sample sizes: \(n \in \{25, 50, 100, 500\}\). For each sample size, I repeatedly simulate 1,000 A/B tests, compute \(\hat\theta\) each time, and then plot a histogram of those 1,000 estimates.
+To demonstrate this, I consider four different sample sizes: $n \in \{25, 50, 100, 500\}$. For each sample size, I repeatedly simulate 1,000 A/B tests, compute $\hat\theta$ each time, and then plot a histogram of those 1,000 estimates.
 
 ```{python}
 #| label: clt-simulation
@@ -258,7 +258,7 @@ $$
 z = \frac{\hat\theta - 0}{SE(\hat\theta)}
 $$
 
-This standardization is important. By the Central Limit Theorem, \(\hat\theta\) is approximately Normally distributed in large samples. Under the null hypothesis, that distribution is centered at zero. When I divide by the standard deviation, the result is approximately standard Normal, so under \(H_0\) I have \(z \;\dot\sim\; N(0,1)\). Once I know the null distribution of the test statistic, I can compute a p-value.
+This standardization is important. By the Central Limit Theorem, $\hat\theta$ is approximately Normally distributed in large samples. Under the null hypothesis, that distribution is centered at zero. When I divide by the standard deviation, the result is approximately standard Normal, so under $H_0$ I have $z \dot\sim N(0,1)$. Once I know the null distribution of the test statistic, I can compute a p-value.
 
 This procedure is sometimes casually called a t-test, though that label is slightly loose here. The classical t-test arises when the data are drawn from a Normal distribution and the variance is estimated from the sample, which produces an exact t-distribution. In my setting, the data are Bernoulli rather than Normal, so there is no exact t-distribution result. What justifies the test is the Central Limit Theorem, which gives approximate Normality in large samples. Since I also estimate the standard error from the data, the procedure resembles a large-sample z-test. In practice, for large samples the t-distribution and standard Normal distribution are extremely similar, so the distinction has little practical effect, though it is still conceptually important.
 
@@ -280,13 +280,13 @@ The p-value tells me how surprising my estimated difference would be if the true
 
 It turns out that the two-sample test I just ran is mathematically equivalent to a simple linear regression. This connection is useful because it shows that regression software can perform the same hypothesis test, and it also points toward more flexible designs with additional controls or treatment groups.
 
-To set this up, I stack the two groups into one dataset. I create an outcome variable \(Y_i\), which equals 1 if visitor \(i\) signs up and 0 otherwise, and a treatment indicator \(D_i\), which equals 1 if the visitor saw CTA A and 0 if the visitor saw CTA B. Then I estimate the regression
+To set this up, I stack the two groups into one dataset. I create an outcome variable $Y_i$, which equals 1 if visitor $i$ signs up and 0 otherwise, and a treatment indicator $D_i$, which equals 1 if the visitor saw CTA A and 0 if the visitor saw CTA B. Then I estimate the regression
 
 $$
 Y_i = \beta_0 + \beta_1 D_i + \varepsilon_i
 $$
 
-The interpretation is straightforward. When \(D_i = 0\), the expected value of \(Y_i\) is \(\beta_0\), so \(\beta_0\) estimates the mean outcome in group B, which is \(\pi_B\). When \(D_i = 1\), the expected value of \(Y_i\) is \(\beta_0 + \beta_1\), so that quantity estimates the mean outcome in group A, which is \(\pi_A\). Therefore \(\beta_1 = \pi_A - \pi_B = \theta\), and the OLS estimate \(\hat\beta_1\) should be numerically identical to \(\hat\theta\).
+The interpretation is straightforward. When $D_i = 0$, the expected value of $Y_i$ is $\beta_0$, so $\beta_0$ estimates the mean outcome in group B, which is $\pi_B$. When $D_i = 1$, the expected value of $Y_i$ is $\beta_0 + \beta_1$, so that quantity estimates the mean outcome in group A, which is $\pi_A$. Therefore $\beta_1 = \pi_A - \pi_B = \theta$, and the OLS estimate $\hat\beta_1$ should be numerically identical to $\hat\theta$.
 
 ```{python}
 #| label: regression-test
@@ -329,11 +329,11 @@ This equivalence matters because the regression framework scales naturally. Once
 
 ## The Problem with Peeking
 
-Suppose my boss is impatient and wants to peek at the results repeatedly before the experiment is finished. Instead of waiting until all 1,000 visitors have been assigned to each group, she wants to test after every 100 visitors per group. That means running 10 hypothesis tests in a single experiment, at \(n = 100, 200, 300, \ldots, 1000\), and stopping early if any one of those tests is significant at the 0.05 level.
+Suppose my boss is impatient and wants to peek at the results repeatedly before the experiment is finished. Instead of waiting until all 1,000 visitors have been assigned to each group, she wants to test after every 100 visitors per group. That means running 10 hypothesis tests in a single experiment, at $n = 100, 200, 300, \ldots, 1000$, and stopping early if any one of those tests is significant at the 0.05 level.
 
-This is a problem under classical frequentist statistics because each additional look at the data creates another opportunity for a false positive. A single test at significance level \(\alpha = 0.05\) has a 5 percent chance of incorrectly rejecting the null when the null is actually true. If I test repeatedly on accumulating data, the overall probability of seeing at least one significant result rises above 5 percent. In other words, peeking inflates the Type I error rate.
+This is a problem under classical frequentist statistics because each additional look at the data creates another opportunity for a false positive. A single test at significance level $\alpha = 0.05$ has a 5 percent chance of incorrectly rejecting the null when the null is actually true. If I test repeatedly on accumulating data, the overall probability of seeing at least one significant result rises above 5 percent. In other words, peeking inflates the Type I error rate.
 
-To show this, I simulate a world in which the null hypothesis is true. I set \(\pi_A = \pi_B = 0.20\), so there is actually no difference between the two CTAs. In each simulated experiment, I generate 1,000 observations for group A and 1,000 for group B. After every 100 observations per group, I compute the z-statistic and p-value and record whether any of the 10 p-values falls below 0.05. I then repeat the entire experiment 10,000 times.
+To show this, I simulate a world in which the null hypothesis is true. I set $\pi_A = \pi_B = 0.20$, so there is actually no difference between the two CTAs. In each simulated experiment, I generate 1,000 observations for group A and 1,000 for group B. After every 100 observations per group, I compute the z-statistic and p-value and record whether any of the 10 p-values falls below 0.05. I then repeat the entire experiment 10,000 times.
 
 ```{python}
 #| label: peeking-simulation
@@ -378,6 +378,6 @@ pd.DataFrame({
 })
 ```
 
-I can also summarize the peeking rule in plain language. Even when there is truly no difference between CTA A and CTA B, repeated testing makes it much more likely that I will eventually see a “significant” result just by chance. The empirical false positive rate from the simulation is therefore noticeably larger than the nominal 5 percent level attached to a single test.
+I can also summarize the peeking rule in plain language. Even when there is truly no difference between CTA A and CTA B, repeated testing makes it much more likely that I will eventually see a significant result just by chance. The empirical false positive rate from the simulation is therefore noticeably larger than the nominal 5 percent level attached to a single test.
 
 In practice, this means that stopping rules matter. If analysts want to monitor an experiment over time, they should use methods specifically designed for sequential testing. Otherwise, repeated peeking can make an ordinary A/B test look more convincing than it really is and lead to false discoveries.
