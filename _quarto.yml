@@ -20,9 +20,9 @@ website:
       - icon: linkedin
         href: https://www.linkedin.com/in/dongjun-wang-a479aa24b
       - icon: envelope
-        href: mailto:your@email.com
+        href: mailto:wangdj935@gmail.com
   page-footer:
-    center: "© 2026 Tommy. Built with Quarto."
+    center: "© 2026 Dongjun Wang. Built with Quarto."
 
 format:
   html:
