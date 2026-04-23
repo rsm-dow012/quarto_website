@@ -13,7 +13,7 @@ website:
       - href: projects.qmd
         text: Projects
       - href: blogs.qmd
-        text: Blog
+        text: Blogs
     right:
       - icon: github
         href: https://github.com/rsm-dow012
