@@ -118,6 +118,8 @@ ax.legend()
 plt.show()
 ```
 
+(You can Delete This!!! Comments: The LLN illustration currently uses element-wise differences (A - B), which implicitly treats the samples as paired. Since A and B are independent samples, it might be more appropriate to compare the running means of each group and then take their difference. This would better reflect the theoretical setup.)
+
 At the beginning of the plot, the running average moves around a lot. That makes sense because with only a small number of observations, random variation can have a large effect on the estimate. As more observations are included, the curve becomes much more stable and starts to settle near the true difference of 0.04.
 
 The main lesson is that larger samples lead to more reliable estimates. The early part of the curve is noisy, while the later part is much steadier. This is exactly what the Law of Large Numbers predicts, and it helps explain why large experiments are so valuable in practice.
