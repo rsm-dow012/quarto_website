@@ -1,6 +1,6 @@
 ---
 title: "Dongjun Wang"
-image: "profile_pic.jpg"
+image: "profile_pic.png"
 about:
   template: jolla
   links:
