@@ -1,0 +1,54 @@
+<svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica Neue, Arial, sans-serif">
+  <defs>
+    <marker id="arr4" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2E6FB7"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="400" rx="16" fill="#F5F8FC"/>
+
+  <!-- BEFORE: cluttered memory -->
+  <text x="155" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#B0392B">Before: "memory rot"</text>
+  <rect x="40" y="60" width="230" height="180" rx="10" fill="#FFFFFF" stroke="#E0C4BF" stroke-width="2"/>
+  <g font-size="11" fill="#888">
+    <text x="58" y="88">• note from Mar (outdated)</text>
+    <text x="58" y="110" fill="#B0392B">• duplicate of above ✗</text>
+    <text x="58" y="132">• contradicts line 1 ✗</text>
+    <text x="58" y="154">• random tool log</text>
+    <text x="58" y="176" fill="#B0392B">• duplicate again ✗</text>
+    <text x="58" y="198">• half-finished thought…</text>
+    <text x="58" y="220">• stale preference</text>
+  </g>
+
+  <!-- arrow: dreaming -->
+  <g transform="translate(380,150)">
+    <path d="M -75 0 L 70 0" stroke="#2E6FB7" stroke-width="3" fill="none" marker-end="url(#arr4)"/>
+    <text x="-2" y="-16" text-anchor="middle" font-size="20">🌙</text>
+    <text x="-2" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#2E6FB7">Dreaming</text>
+    <text x="-2" y="40" text-anchor="middle" font-size="10" fill="#33506e">curate</text>
+  </g>
+
+  <!-- AFTER: clean memory -->
+  <text x="605" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#1B7A3D">After: clean &amp; current</text>
+  <rect x="490" y="60" width="230" height="180" rx="10" fill="#FFFFFF" stroke="#B9DCC4" stroke-width="2"/>
+  <g font-size="12" fill="#0B1F3A">
+    <text x="510" y="92">✓ key working approach</text>
+    <text x="510" y="120">✓ team preference</text>
+    <text x="510" y="148">✓ known failure to avoid</text>
+    <text x="510" y="176">✓ current, no duplicates</text>
+  </g>
+
+  <!-- bottom row: trust + 6x -->
+  <line x1="40" y1="270" x2="720" y2="270" stroke="#D4E1F0" stroke-width="1.5"/>
+
+  <text x="200" y="305" text-anchor="middle" font-size="13" fill="#0B1F3A">You stay in control</text>
+  <text x="200" y="325" text-anchor="middle" font-size="13" font-weight="700" fill="#0B1F3A">approve · reject · edit</text>
+  <text x="200" y="350" text-anchor="middle" font-size="12" fill="#33506e">Auditable — no black-box retraining</text>
+
+  <!-- 6x stat block -->
+  <g transform="translate(560,310)">
+    <rect x="-90" y="-30" width="180" height="70" rx="12" fill="#0B1F3A"/>
+    <text x="0" y="2" text-anchor="middle" font-size="32" font-weight="800" fill="#7FB2EE">6×</text>
+    <text x="0" y="24" text-anchor="middle" font-size="11" fill="#cfe2f7">more tasks completed</text>
+    <text x="0" y="-40" text-anchor="middle" font-size="10" fill="#777">early real-world result (legal-AI)</text>
+  </g>
+</svg>

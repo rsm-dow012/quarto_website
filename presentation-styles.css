@@ -1,0 +1,100 @@
+/* Dreaming — revealjs theme tweaks
+   Navy/blue titles, black body text (matching your report style),
+   plus a few visual touches for a "highly visual" short talk. */
+
+.reveal {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  color: #111111;            /* black body text */
+}
+
+/* All slide titles in navy/blue */
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  color: #0B1F3A;
+  font-weight: 700;
+}
+
+/* Title slide text white on navy */
+.reveal .title-slide h1,
+.reveal .title-slide .subtitle,
+.reveal .title-slide .author,
+.reveal .title-slide .date {
+  color: #FFFFFF !important;
+}
+
+/* Section-title slides: accent underline under the heading */
+.section-title h2 {
+  border-bottom: 4px solid #2E6FB7;
+  padding-bottom: 0.25em;
+  display: inline-block;
+}
+/* moon accent before each section title — reinforces the dreaming theme */
+.section-title h2::before {
+  content: "🌙 ";
+  font-size: 0.85em;
+}
+
+/* Callout / highlight box */
+.highlight-box {
+  background: #EAF1FA;
+  border-left: 6px solid #2E6FB7;
+  padding: 0.6em 1em;
+  border-radius: 6px;
+  font-size: 0.95em;
+}
+
+/* Big analogy line (the "moon" moment) */
+.big-analogy {
+  text-align: center;
+  font-size: 1.4em;
+  margin-top: 0.8em;
+  color: #0B1F3A;
+  font-weight: 600;
+}
+
+/* Cycle diagram framing */
+.cycle-img img {
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(11, 31, 58, 0.35);
+  max-height: 75vh;   /* let it grow taller than reveal's default cap */
+  margin-top: 0.3em;
+}
+
+/* Small caveat note */
+.aside-note {
+  font-size: 0.8em;
+  color: #444444;
+  margin-top: 0.7em;
+  font-style: italic;
+}
+
+/* Payoff / takeaway emphasis */
+.payoff {
+  font-size: 1.1em;
+  color: #0B1F3A;
+  font-weight: 600;
+}
+
+.takeaway {
+  background: #0B1F3A;
+  color: #FFFFFF;
+  padding: 0.7em 1em;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.05em;
+  margin-top: 0.6em;
+}
+.takeaway strong { color: #7FB2EE; }
+
+/* Compact takeaway for slides that also carry a diagram */
+.takeaway-sm {
+  background: #0B1F3A;
+  color: #FFFFFF;
+  padding: 0.5em 0.9em;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.85em;
+  margin-top: 0.5em;
+}
+.takeaway-sm strong { color: #7FB2EE; }

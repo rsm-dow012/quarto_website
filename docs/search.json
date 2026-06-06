@@ -530,5 +530,75 @@
     "title": "MaxDiff Analysis of MSBA Class Preferences",
     "section": "Discussion",
     "text": "Discussion\nFor a student or an advisor who only wants the main result: from 85 MSBA students and 680 best-worst screens, MGTA 495 Marketing Analytics (Spring, Yavorsky) is the clear favorite. It receives about a quarter of all “best” votes in a contest of ten classes, which is more than two times any other class. After it, there is a strong middle group, which includes Business Analytics, Customer Analytics, Large Data, the Capstone, and SQL. The least preferred classes are Analytics Consulting, Marketing/Finance/Operations, and the AI Math/Programming course. The small surprise is the size of the gap at the top: the most preferred elective is not only the highest, but it is higher by a large amount. All three methods agree on this result, so an advisor can be confident that it describes the students, and not only the method.\nOn the methodological side, each method is good for a different question:\n\nCounts is the right choice when we want a quick descriptive result, for example an executive dashboard or a first look. It does not need modeling assumptions, and it is easy to explain to anyone.\nMLE MNL is the right choice when we need rigorous point estimates with classical standard errors, and when we need one clear number for each item to report.\nBayesian MNL is the right choice when we want uncertainty on derived quantities, for example shares of preference, market simulations, or “what if we add a new elective?” scenarios. It is also the right choice when we want to extend the model in a hierarchical way to estimate the preferences of each individual student.\n\nThere are also some caveats that we must remember. The respondents are a self-selected sample of MSBA students, so these preferences may not be the same for other cohorts or other programs. The preferences are also mixed together with things that the survey does not control: the professor of each class, the quarter when the class is offered, the prior coursework of the student, and the position of the student in the program can all affect the answers. For this reason, the design cannot separate “I like this subject” from “I like this professor.”\nIf we had more time, the most natural next step is to use the anchor tasks that we put aside. These dual-response screens find an absolute zero point of preference, and with this point we could run a real anchored MaxDiff. Then we could say not only which classes are ranked higher than others, but also which classes the students actively like and which classes they only tolerate. After that, a hierarchical Bayesian extension could estimate one utility vector for each respondent. This would change a single program-level ranking into a tool for personalized course advising."
+  },
+  {
+    "objectID": "Presentation.html#the-problem-ai-agents-forget",
+    "href": "Presentation.html#the-problem-ai-agents-forget",
+    "title": "When AI Sleeps on It",
+    "section": "The problem: AI agents forget",
+    "text": "The problem: AI agents forget\nMost assistants start every task from a blank slate:"
+  },
+  {
+    "objectID": "Presentation.html#the-idea-borrow-from-sleep",
+    "href": "Presentation.html#the-idea-borrow-from-sleep",
+    "title": "When AI Sleeps on It",
+    "section": "The idea: borrow from sleep",
+    "text": "The idea: borrow from sleep\nThe brain doesn’t switch off when we sleep — it sorts the day’s mess into memory:"
+  },
+  {
+    "objectID": "Presentation.html#how-dreaming-works",
+    "href": "Presentation.html#how-dreaming-works",
+    "title": "When AI Sleeps on It",
+    "section": "How Dreaming works",
+    "text": "How Dreaming works\nRuns while the agent is idle — review, curate, wake up smarter:"
+  },
+  {
+    "objectID": "Presentation.html#why-it-matters",
+    "href": "Presentation.html#why-it-matters",
+    "title": "When AI Sleeps on It",
+    "section": "Why it matters",
+    "text": "Why it matters\nMemory becomes an active system, not a passive notebook:\n\n\nTakeaway: AI is starting to learn from experience the way we do — by sleeping on it."
+  },
+  {
+    "objectID": "Presentation.html#section",
+    "href": "Presentation.html#section",
+    "title": "When AI Sleeps on It",
+    "section": "",
+    "text": "Thank you 🌙\nQuestions?"
+  },
+  {
+    "objectID": "Presentation.html",
+    "href": "Presentation.html",
+    "title": "When AI Sleeps on It",
+    "section": "",
+    "text": "Most AI assistants start every task from a blank slate.\n. . .\n\nThey repeat the same mistakes across sessions\nThey re-discover the same workarounds\nThey never build up the “intuition” a good human assistant gains over time\n\n. . .\n\nFor a quick chatbot, fine. For an agent doing long, multi-step work, this is a real problem."
+  },
+  {
+    "objectID": "Wang_Dongjun-claude_dreaming.html#the-problem-ai-agents-forget",
+    "href": "Wang_Dongjun-claude_dreaming.html#the-problem-ai-agents-forget",
+    "title": "When AI Sleeps on It",
+    "section": "The problem: AI agents forget",
+    "text": "The problem: AI agents forget\nMost assistants start every task from a blank slate:"
+  },
+  {
+    "objectID": "Wang_Dongjun-claude_dreaming.html#the-idea-borrow-from-sleep",
+    "href": "Wang_Dongjun-claude_dreaming.html#the-idea-borrow-from-sleep",
+    "title": "When AI Sleeps on It",
+    "section": "The idea: borrow from sleep",
+    "text": "The idea: borrow from sleep\nThe brain doesn’t switch off when we sleep — it sorts the day’s mess into memory:"
+  },
+  {
+    "objectID": "Wang_Dongjun-claude_dreaming.html#how-dreaming-works",
+    "href": "Wang_Dongjun-claude_dreaming.html#how-dreaming-works",
+    "title": "When AI Sleeps on It",
+    "section": "How Dreaming works",
+    "text": "How Dreaming works\nRuns while the agent is idle — review, curate, wake up smarter:"
+  },
+  {
+    "objectID": "Wang_Dongjun-claude_dreaming.html#why-it-matters",
+    "href": "Wang_Dongjun-claude_dreaming.html#why-it-matters",
+    "title": "When AI Sleeps on It",
+    "section": "Why it matters",
+    "text": "Why it matters\nMemory becomes an active system, not a passive notebook:\n\n\nTakeaway: AI is starting to learn from experience the way we do — by sleeping on it."
   }
 ]

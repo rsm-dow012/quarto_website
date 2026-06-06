@@ -1,0 +1,43 @@
+---
+title: "When AI Sleeps on It"
+subtitle: "Claude's *Dreaming* — how an AI agent improves itself overnight"
+author: "Dongjun (Tommy) Wang"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    transition: slide
+    embed-resources: true
+    incremental: false
+    title-slide-attributes:
+      data-background-color: "#0B1F3A"
+    css: presentation-styles.css
+---
+
+## The problem: AI agents forget {.section-title}
+
+Most assistants start every task from a **blank slate**:
+
+![](problem-forgetting.svg){fig-align="center" width="88%"}
+
+## The idea: borrow from sleep {.section-title}
+
+The brain doesn't switch off when we sleep — it **sorts the day's mess into memory**:
+
+![](sleep-analogy.svg){fig-align="center" width="88%"}
+
+## How Dreaming works {.section-title}
+
+Runs while the agent is **idle** — review, curate, wake up smarter:
+
+![](dreaming-cycle.svg){.cycle-img fig-align="center" width="90%"}
+
+## Why it matters {.section-title}
+
+Memory becomes an **active system**, not a passive notebook:
+
+![](why-matters.svg){fig-align="center" width="74%"}
+
+::: {.takeaway-sm}
+**Takeaway:** AI is starting to learn from experience the way *we* do — by sleeping on it.
+:::

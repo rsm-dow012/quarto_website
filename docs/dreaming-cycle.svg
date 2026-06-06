@@ -1,0 +1,69 @@
+<svg viewBox="0 0 760 460" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica Neue, Arial, sans-serif">
+  <defs>
+    <radialGradient id="nightSky" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#1a3a5c"/>
+      <stop offset="100%" stop-color="#0B1F3A"/>
+    </radialGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#7FB2EE"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect x="0" y="0" width="760" height="460" rx="16" fill="url(#nightSky)"/>
+
+  <!-- little stars -->
+  <g fill="#7FB2EE" opacity="0.7">
+    <circle cx="80" cy="60" r="2"/>
+    <circle cx="150" cy="100" r="1.5"/>
+    <circle cx="680" cy="70" r="2"/>
+    <circle cx="620" cy="130" r="1.5"/>
+    <circle cx="710" cy="200" r="1.8"/>
+    <circle cx="60" cy="200" r="1.5"/>
+    <circle cx="700" cy="380" r="1.5"/>
+    <circle cx="70" cy="360" r="2"/>
+  </g>
+
+  <!-- crescent moon top center -->
+  <g transform="translate(380,58)">
+    <circle cx="0" cy="0" r="26" fill="#FCE9A0"/>
+    <circle cx="9" cy="-4" r="24" fill="#0B1F3A"/>
+  </g>
+
+  <!-- circular flow arrows (three arcs) -->
+  <g fill="none" stroke="#7FB2EE" stroke-width="3" marker-end="url(#arrow)">
+    <!-- top-right arc: Work -> Dream -->
+    <path d="M 470 175 A 150 150 0 0 1 470 305"/>
+    <!-- bottom arc: Dream -> Wake (smarter) -->
+    <path d="M 430 360 A 150 150 0 0 1 270 330"/>
+    <!-- left arc: Wake -> Work -->
+    <path d="M 250 290 A 150 150 0 0 1 290 165"/>
+  </g>
+
+  <!-- Node 1: Work (day) -->
+  <g transform="translate(380,150)">
+    <circle cx="0" cy="0" r="58" fill="#EAF1FA" stroke="#2E6FB7" stroke-width="3"/>
+    <text x="0" y="-10" text-anchor="middle" font-size="26">☀️</text>
+    <text x="0" y="18" text-anchor="middle" font-size="16" font-weight="700" fill="#0B1F3A">Work</text>
+    <text x="0" y="38" text-anchor="middle" font-size="11" fill="#33506e">runs real tasks</text>
+  </g>
+
+  <!-- Node 2: Dream (night) -->
+  <g transform="translate(520,330)">
+    <circle cx="0" cy="0" r="58" fill="#0B1F3A" stroke="#7FB2EE" stroke-width="3"/>
+    <text x="0" y="-10" text-anchor="middle" font-size="26">🌙</text>
+    <text x="0" y="18" text-anchor="middle" font-size="16" font-weight="700" fill="#FFFFFF">Dream</text>
+    <text x="0" y="38" text-anchor="middle" font-size="11" fill="#9cc3ef">curates memory</text>
+  </g>
+
+  <!-- Node 3: Wake smarter -->
+  <g transform="translate(240,330)">
+    <circle cx="0" cy="0" r="58" fill="#EAF1FA" stroke="#2E6FB7" stroke-width="3"/>
+    <text x="0" y="-10" text-anchor="middle" font-size="26">💡</text>
+    <text x="0" y="18" text-anchor="middle" font-size="15" font-weight="700" fill="#0B1F3A">Wake up</text>
+    <text x="0" y="38" text-anchor="middle" font-size="11" fill="#33506e">smarter next time</text>
+  </g>
+
+  <!-- center label -->
+  <text x="380" y="250" text-anchor="middle" font-size="13" fill="#7FB2EE" font-style="italic">a self-improvement loop</text>
+</svg>

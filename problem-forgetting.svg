@@ -1,0 +1,48 @@
+<svg viewBox="0 0 760 380" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica Neue, Arial, sans-serif">
+  <defs>
+    <marker id="arr2" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#B0392B"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="380" rx="16" fill="#FBF4F2"/>
+
+  <text x="380" y="44" text-anchor="middle" font-size="17" font-weight="700" fill="#0B1F3A">Every session starts from zero</text>
+
+  <!-- three session boxes -->
+  <g>
+    <!-- session 1 -->
+    <rect x="40" y="90" width="200" height="150" rx="12" fill="#FFFFFF" stroke="#D9C2BD" stroke-width="2"/>
+    <text x="140" y="120" text-anchor="middle" font-size="14" font-weight="700" fill="#0B1F3A">Session 1</text>
+    <text x="140" y="150" text-anchor="middle" font-size="30">😟</text>
+    <text x="140" y="185" text-anchor="middle" font-size="12" fill="#B0392B">hits a problem,</text>
+    <text x="140" y="203" text-anchor="middle" font-size="12" fill="#B0392B">finds a workaround</text>
+    <text x="140" y="228" text-anchor="middle" font-size="11" fill="#999" font-style="italic">…then forgets</text>
+
+    <!-- session 2 -->
+    <rect x="280" y="90" width="200" height="150" rx="12" fill="#FFFFFF" stroke="#D9C2BD" stroke-width="2"/>
+    <text x="380" y="120" text-anchor="middle" font-size="14" font-weight="700" fill="#0B1F3A">Session 2</text>
+    <text x="380" y="150" text-anchor="middle" font-size="30">😟</text>
+    <text x="380" y="185" text-anchor="middle" font-size="12" fill="#B0392B">same problem,</text>
+    <text x="380" y="203" text-anchor="middle" font-size="12" fill="#B0392B">solves it AGAIN</text>
+    <text x="380" y="228" text-anchor="middle" font-size="11" fill="#999" font-style="italic">…then forgets</text>
+
+    <!-- session 3 -->
+    <rect x="520" y="90" width="200" height="150" rx="12" fill="#FFFFFF" stroke="#D9C2BD" stroke-width="2"/>
+    <text x="620" y="120" text-anchor="middle" font-size="14" font-weight="700" fill="#0B1F3A">Session 3</text>
+    <text x="620" y="150" text-anchor="middle" font-size="30">😟</text>
+    <text x="620" y="185" text-anchor="middle" font-size="12" fill="#B0392B">same problem,</text>
+    <text x="620" y="203" text-anchor="middle" font-size="12" fill="#B0392B">AGAIN…</text>
+    <text x="620" y="228" text-anchor="middle" font-size="11" fill="#999" font-style="italic">…then forgets</text>
+  </g>
+
+  <!-- arrows with broken/reset symbol between -->
+  <g stroke="#B0392B" stroke-width="2.5" fill="none" marker-end="url(#arr2)">
+    <path d="M 244 165 L 274 165"/>
+    <path d="M 484 165 L 514 165"/>
+  </g>
+  <text x="259" y="150" text-anchor="middle" font-size="16">✂️</text>
+  <text x="499" y="150" text-anchor="middle" font-size="16">✂️</text>
+
+  <text x="380" y="300" text-anchor="middle" font-size="15" fill="#B0392B" font-weight="600">No memory carries over → the same mistakes, forever</text>
+  <text x="380" y="330" text-anchor="middle" font-size="12" fill="#777">Never builds the intuition a skilled human gains over time</text>
+</svg>
