@@ -283,7 +283,7 @@ window.Quarto = {
 </section>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<div id="c6056a67" class="cell" data-execution_count="1">
+<div id="949a81cf" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -308,7 +308,7 @@ window.Quarto = {
 <pre><code>Observations: 2,053  |  Schools: 1,015</code></pre>
 </div>
 </div>
-<div id="7f994e5f" class="cell" data-execution_count="2">
+<div id="e543b33d" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── OLS with cluster-robust standard errors ────────────────────────────────────</span></span>
@@ -345,7 +345,7 @@ window.Quarto = {
 <section id="figure-1-panel-b-class-size-and-maimonides-rule-4th-grade" class="level2">
 <h2 class="anchored" data-anchor-id="figure-1-panel-b-class-size-and-maimonides-rule-4th-grade">Figure 1 Panel B — Class Size and Maimonides’ Rule (4th Grade)</h2>
 <p>The figure below replicates Panel B of Figure 1 in Angrist &amp; Lavy (1999). For each enrollment count, we plot (i) the class size predicted by Maimonides’ Rule (dashed) and (ii) the actual average class size across all 4th-grade classes with that enrollment (solid).</p>
-<div id="f68f32c0" class="cell" data-execution_count="3">
+<div id="0120de58" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Aggregate to enrollment-level means ───────────────────────────────────────</span></span>
@@ -392,7 +392,7 @@ window.Quarto = {
 <section id="table-ii-columns-7-10-naïve-ols-the-biased-baseline" class="level2">
 <h2 class="anchored" data-anchor-id="table-ii-columns-7-10-naïve-ols-the-biased-baseline">Table II, Columns 7 &amp; 10 — Naïve OLS (The Biased Baseline)</h2>
 <p>Before introducing the RDD, Angrist and Lavy document what a simple OLS regression shows. They regress average class test scores on actual class size — nothing else. This is the <strong>naïve</strong> approach a researcher might try first.</p>
-<div id="e52b8652" class="cell" data-execution_count="4">
+<div id="95335be7" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Run naïve OLS regressions ─────────────────────────────────────────────────</span></span>
@@ -468,7 +468,7 @@ window.Quarto = {
 <section id="table-iii-panel-a-columns-7-9-11-reduced-form-rdd-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="table-iii-panel-a-columns-7-9-11-reduced-form-rdd-estimates">Table III Panel A, Columns 7, 9, &amp; 11 — Reduced-Form RDD Estimates</h2>
 <p>Instead of regressing scores on <em>actual</em> class size, the reduced-form RDD regresses outcomes directly on the <strong>Maimonides’ Rule predicted class size</strong> (<span class="math inline">\(f_{sc}\)</span>), controlling for the percent of disadvantaged students (<code>tipuach</code>). Because <span class="math inline">\(f_{sc}\)</span> is determined solely by the administrative enrollment rule — not by any choice or characteristic of students or schools — this regression recovers variation in class size that is plausibly <strong>exogenous</strong>.</p>
-<div id="b745b4a3" class="cell" data-execution_count="5">
+<div id="52182332" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Run reduced-form RDD regressions ─────────────────────────────────────────</span></span>
@@ -579,7 +579,7 @@ window.Quarto = {
 <section id="comparing-naïve-ols-vs.-reduced-form-rdd" class="level2">
 <h2 class="anchored" data-anchor-id="comparing-naïve-ols-vs.-reduced-form-rdd">Comparing Naïve OLS vs.&nbsp;Reduced-Form RDD</h2>
 <p>The table below places the two sets of estimates side by side for 4th-grade test scores.</p>
-<div id="5794848e" class="cell" data-execution_count="6">
+<div id="6dfb844b" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Side-by-side comparison table ─────────────────────────────────────────────</span></span>
@@ -629,7 +629,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="18a5a27b" class="cell" data-execution_count="7">
+<div id="1fc6b781" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Visualise the contrast ─────────────────────────────────────────────────────</span></span>
