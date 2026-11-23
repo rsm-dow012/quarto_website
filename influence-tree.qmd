@@ -1,0 +1,380 @@
+---
+pagetitle: "Influence Tree"
+navbar: false
+sidebar: false
+page-footer: false
+page-layout: custom
+toc: false
+search: false
+format:
+  html:
+    embed-resources: true
+    theme: none
+    css: []
+    smooth-scroll: false
+---
+
+```{=html}
+<div id="app">
+  <header id="topbar">
+    <div class="brand">Influence Tree <span>· MGTA 459, second half</span></div>
+    <div class="hint" id="hint">Click the center circle to start</div>
+    <button id="reset-view" type="button" title="Center the tree">Re-center</button>
+  </header>
+  <div id="node-tree" aria-label="Influence concept tree"></div>
+  <aside id="panel" aria-live="polite" hidden>
+    <button id="panel-close" type="button" aria-label="Close">×</button>
+    <div id="panel-crumb"></div>
+    <h2 id="panel-title"></h2>
+    <p id="panel-key"></p>
+    <div id="panel-dots"></div>
+    <div id="panel-body"></div>
+    <div id="panel-actions">
+      <button id="panel-next" type="button"></button>
+      <button id="panel-restart" type="button">Start this card again</button>
+    </div>
+  </aside>
+</div>
+
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --ink: #1f2328;
+    --muted: #646b73;
+    --line: #d9d6cf;
+    --card: #ffffff;
+    /* UC San Diego brand colors (brand.ucsd.edu) */
+    --navy: #182B49;
+    --root: #182B49;  /* Navy: overview */
+    --c1: #00629B;    /* Blue: Persuasion */
+    --c2: #C69214;    /* Gold: Relationships */
+    --c3: #00C6D7;    /* Turquoise: Meta-tools */
+    --quote: #F5F0E6; /* Sand */
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  #app { position: fixed; inset: 0; overflow: hidden; }
+
+  #topbar { position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; align-items: center;
+    gap: 16px; padding: 12px 16px; pointer-events: none; }
+  #topbar > * { pointer-events: auto; }
+  .brand { font-weight: 650; font-size: 15px; letter-spacing: .2px; white-space: nowrap; }
+  .brand span { font-weight: 400; color: var(--muted); }
+  .hint { flex: 1; font-size: 13px; color: var(--muted); pointer-events: none !important; }
+  #reset-view { font: inherit; font-size: 12px; color: var(--muted); background: var(--card);
+    border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+  #reset-view:hover { color: var(--ink); border-color: #b9b5ad; }
+
+  #node-tree { position: absolute; inset: 0; cursor: grab; }
+  #node-tree:active { cursor: grabbing; }
+  #node-tree svg { width: 100%; height: 100%; display: block; }
+  .link { stroke: #B6B1A9; stroke-width: 1.6px; }
+  .node { cursor: pointer; }
+  .node circle { transition: stroke-width .15s; }
+  .node:hover circle.main { stroke-width: 4px; }
+  .node text { pointer-events: none; fill: var(--ink); paint-order: stroke; stroke: var(--bg);
+    stroke-width: 5px; stroke-linejoin: round; }
+  .node .label { font-size: 13px; font-weight: 500; }
+  .node.root .label { font-size: 15px; font-weight: 650; }
+  .node.branch .label { font-size: 14px; font-weight: 600; }
+  .node .badge { font-size: 10.5px; fill: var(--muted); font-weight: 500; }
+  .node.selected circle.halo { opacity: 1; }
+  circle.halo { opacity: 0; fill: none; stroke-width: 2px; stroke-dasharray: 3 3; }
+
+  /* side panel (bottom sheet on phones) */
+  #panel { position: absolute; z-index: 4; top: 56px; right: 16px; bottom: 16px; width: min(420px, 42vw);
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08); padding: 22px 22px 18px; overflow-y: auto;
+    border-top: 5px solid var(--accent, var(--root)); }
+  #panel[hidden] { display: none; }
+  #panel-close { position: absolute; top: 10px; right: 12px; border: 0; background: none; font-size: 22px;
+    line-height: 1; color: var(--muted); cursor: pointer; padding: 4px 6px; }
+  #panel-close:hover { color: var(--ink); }
+  #panel-crumb { font-size: 11.5px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted);
+    margin-right: 28px; }
+  #panel-title { margin: 6px 28px 4px 0; font-size: 22px; line-height: 1.25; }
+  #panel-key { margin: 0 0 12px; font-size: 16px; font-style: italic; color: var(--accent-ink, var(--root)); }
+  #panel-key:empty { display: none; }
+  #panel-dots { display: flex; gap: 6px; margin: 4px 0 14px; flex-wrap: wrap; }
+  #panel-dots span { font-size: 11px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line);
+    color: var(--muted); }
+  #panel-dots span.on { background: var(--accent, var(--root)); border-color: transparent; color: var(--on-accent, #fff); }
+  #panel-body section { margin: 0 0 16px; animation: rise .28s ease-out; }
+  #panel-body h3 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .8px;
+    color: var(--accent-ink, var(--root)); }
+  #panel-body p, #panel-body li { font-size: 15px; line-height: 1.6; margin: 0 0 8px; }
+  #panel-body ul, #panel-body ol { padding-left: 20px; margin: 0 0 8px; }
+  #panel-body section.quote { background: var(--quote); border-left: 3px solid var(--accent, var(--root));
+    border-radius: 6px; padding: 10px 14px 4px; }
+  #panel-body section.quote p { font-family: Georgia, "Times New Roman", serif; }
+  #panel-body p.plain { font-family: inherit !important; font-size: 13.5px; color: var(--muted); font-style: italic; }
+  #panel-body section.mine { background: color-mix(in srgb, var(--accent, var(--root)) 9%, #fff); border-radius: 8px; padding: 10px 14px 4px; }
+  #panel-body section.todo { border: 1.5px dashed var(--accent, var(--root)); border-radius: 8px; padding: 10px 14px 4px; }
+  #panel-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  #panel-next { font: inherit; font-size: 14px; font-weight: 600; color: var(--on-accent, #fff); background: var(--accent, var(--root));
+    border: 0; border-radius: 8px; padding: 9px 16px; cursor: pointer; }
+  #panel-next:hover { filter: brightness(1.08); }
+  #panel-next[hidden], #panel-restart[hidden] { display: none; }
+  #panel-restart { font: inherit; font-size: 12.5px; color: var(--muted); background: none; border: 0;
+    text-decoration: underline; cursor: pointer; padding: 4px 0; }
+  .done-note { font-size: 13px; color: var(--muted); margin: 2px 0 10px; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  @media (max-width: 760px) {
+    .brand span { display: none; }
+    .hint { font-size: 12px; }
+    #panel { top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; max-height: 50vh; padding: 18px 16px 14px; }
+    #panel-title { font-size: 19px; }
+    #panel-body p, #panel-body li { font-size: 14.5px; }
+  }
+</style>
+
+<script src="d3.min.js"></script>
+<script>
+// =====================================================================
+//  CONTENT: generated from tree-content-draft.md
+//  root   -> steps revealed one by one (6 steps)
+//  branch -> short intro shown at once
+//  leaf   -> Concept -> Story -> Quote -> What I'll do (one per click)
+// =====================================================================
+const treeData = {"name": "Good work is not enough", "title": "Doing good work is not enough. Power and influence get things done.", "kind": "root", "steps": [{"label": "Why this tree exists", "html": "<p>Good work is necessary, but it does not automatically give you power, protect your job, or change other people's minds. Pfeffer shows this with research:<\/p><ul><li>Bosses give higher ratings to people they helped hire, even when real performance is the same (Schoorman study).<\/li><li>At Fokker, workers rated \"very good\" were only 12% more likely to be promoted than workers rated \"good.\"<\/li><li>CEOs who had three bad years and went bankrupt still had only a 50% chance of losing their jobs.<\/li><li>Very good work can even trap you. Phil's boss would not let him move to a new job because he was \"too good in the job you are doing for me.\"<\/li><\/ul>"}, {"label": "My goal", "html": "<p>In the next one or two years, I want to work as an analyst in the US. The industry is open, but the job must match my major, because I plan to work on OPT (Optional Practical Training), and OPT requires a job related to my field of study.<\/p>"}, {"label": "My strength and my weak spot", "html": "<p>When I talk with clients, classmates, or older people, I tell my own experience honestly, and I think from the other person's point of view. This is a strength.<\/p><p>The same habit is also my weak spot. I move to the other person's side very easily, so I cannot hold my own position firmly. My view is easily shaken by other people's comments and opinions.<\/p><p>In course terms: my Ethos (honesty) and Allocentrism (seeing from the other side) are strong, but my Might (staying firm) is weak. Lincoln did both: he understood other people very well, but he still held his one main goal (Intentionality). In this tree, Allocentrism, Might and Intentionality each have a \"My experience\" part.<\/p>"}, {"label": "My commitments so far", "html": "<p><strong>What I have already done:<\/strong> Through my capstone, I met the engineer who builds and updates the database behind the current website of the City of San Diego's Environmental Services Department. After the project ended, we had a long online meeting. I asked my questions about the project and learned what the engineer's job really involves. I also talked honestly about my self-doubt about my own work in the capstone. At the end, the engineer gave me their personal contact information. In course terms, this is Networks: I built a relationship with someone outside my group.<\/p><p><strong>My next step:<\/strong> I have not asked for a second conversation yet. By Sunday, November 29, 2026, I will send a short message to thank the engineer again and ask for a 30-minute follow-up chat before I graduate in December. After that, I will stay in touch about once every two months, even when I do not need anything.<\/p>"}, {"label": "Three mistakes in my own thinking (Pfeffer)", "html": "<ol><li><em>Believing the world is fair.<\/em> I may think \"if I work hard, I will be rewarded.\" This is often not true. I should learn from every successful person, even people I do not like.<\/li><li><em>Trusting leadership books too much.<\/em> Successful leaders tell nice stories about themselves and leave out the political moves they made. Research and my own observation are better guides.<\/li><li><em>Getting in my own way.<\/em> People often do not try, so they have an excuse if they fail. This protects their pride, but it makes failure more likely.<\/li><\/ol>"}, {"label": "A warning story: Erik Peterson at Biometra", "html": "<p>Erik is 29, smart and well liked. He becomes general manager of a small company, works 60 to 80 hours a week, and builds a team that likes him. But he never builds a relationship with Jenkins, the powerful senior boss. He avoids Green and Cantor, two headquarters managers, after two bad meetings. His direct boss, Hardy, avoids making decisions, and Erik cannot change that. Erik loses most of his requests to headquarters. He focuses on technical problems and ignores the people problems. In case (B), Jenkins and the new senior VP Harper decide to visit too.<\/p>"}, {"label": "Three kinds of power (Lincoln reading)", "html": "<ul><li><em>Soft power<\/em>: people like and trust you.<\/li><li><em>Hard power<\/em>: you have authority or force.<\/li><li><em>Smart power<\/em>: you understand the situation better than others and choose the right tool.<\/li><\/ul><p>The 12 tools in this tree come from the course's \"Leverage Inventory.\"<\/p>"}, {"label": "Quote", "html": "<p>\"It is performance, coupled with political skill, that will help you rise through the ranks. Performance by itself is seldom sufficient, and in some instances, may not even be necessary.\" (Pfeffer, <em>Power<\/em>, Ch. 1)<\/p><p class=\"plain\">Plain meaning: you move up through good work plus political skill. Good work alone is rarely enough.<\/p>"}, {"label": "What I'll do", "html": "<p>See relationships with people above me, next to me and below me as part of my job. Each week I will ask: Who needs to know what I did? Whose support will I need next month?<\/p>"}], "children": [{"name": "Persuasion", "title": "Persuasion: what I say", "kind": "branch", "intro": "<p>Ethos, logos and pathos are the three parts of persuasion from classical rhetoric. People notice them first, but they are only the surface of influence. Cialdini's six principles and the <em>Made to Stick<\/em> checklist (SUCCESs) also belong here.<\/p>", "children": [{"name": "Ethos", "key": "Make your credibility visible.", "steps": [{"label": "Concept", "html": "<p>Ethos means the speaker's credibility: character, expertise, honesty, and being similar to the audience. People do not automatically know you are credible. You have to show it.<\/p>"}, {"label": "Story", "html": "<p>Stroke patients often stopped doing their home exercises. They knew their doctors' qualifications, but not their physical therapists'. Cialdini's team asked the therapists to hang their diplomas and awards on the wall. Patients then followed the exercise plan 34% more often. Lincoln's ethos was quieter: he was honest and never proud, even when he won, so even his rivals trusted him.<\/p>"}, {"label": "Quote", "html": "<p>\"Expose your expertise; don't assume it's self-evident.\" (Cialdini)<\/p><p>Lincoln \"impressed upon the people the conviction of his honesty and fidelity to one great purpose.\" (Charles Francis Adams, in <em>Team of Rivals<\/em>)<\/p><p class=\"plain\">Plain meaning: people believed Lincoln was honest and loyal to one big goal.<\/p>"}, {"label": "What I'll do", "html": "<p>When I join a new group, I will share one short example of a problem I solved before, in a natural way, not as bragging. I will keep small promises so people can trust my word.<\/p>"}]}, {"name": "Logos", "key": "One clear point, in simple terms.", "steps": [{"label": "Concept", "html": "<p>Logos means the logic of the argument. Good logic does not mean more data. It means one clear main point, explained in words the listener already understands. The main enemy is the <em>Curse of Knowledge<\/em>: once I know something, it is hard to imagine not knowing it, so I explain it badly.<\/p>"}, {"label": "Story", "html": "<p>A health group (CSPI) found that a medium movie popcorn had 37 grams of saturated fat. Most people do not know what that number means. So the group said the popcorn had more fat than \"a bacon-and-eggs breakfast, a Big Mac and fries for lunch, and a steak dinner with all the trimmings, combined!\" They showed all that food on a table for TV cameras. Popcorn sales dropped, and theaters stopped using the unhealthy oil. In another study, people tapped the rhythm of a famous song. They guessed listeners would name the song 50% of the time. The real result was 2.5%.<\/p>"}, {"label": "Quote", "html": "<p>\"If you argue ten points, even if each is a good point, when they get back to the jury room they won't remember any.\" (a defense lawyer, in <em>Made to Stick<\/em>)<\/p><p class=\"plain\">Plain meaning: give ten arguments and people remember none. Give one.<\/p>"}, {"label": "What I'll do", "html": "<p>Before a presentation, I will write my main point in one sentence. I will turn important numbers into simple comparisons. I will test my message on someone outside my field.<\/p>"}]}, {"name": "Pathos", "key": "Touch feelings first, then give reasons.", "steps": [{"label": "Concept", "html": "<p>Pathos means emotional connection with the audience. People act when they feel something. They care more about real people and stories than about abstract ideas or numbers.<\/p>"}, {"label": "Story", "html": "<p>In a Stanford class, students give one-minute persuasive speeches. On average a speech has 2.5 statistics, and only 1 student in 10 tells a story. Ten minutes later, 63% of listeners remember the stories, but only 5% remember any statistic. Lincoln used humor and simple everyday comparisons. He said that refusing to add a new room to your house does not mean \"I have decided to destroy the existing house!\"<\/p>"}, {"label": "Quote", "html": "<p>To \"win a man to your cause,\" you must first reach his heart, \"the great high road to his reason.\" (Lincoln, in <em>Team of Rivals<\/em>)<\/p><p class=\"plain\">Plain meaning: to win someone's support, first reach their feelings. Feelings are the main road to their thinking.<\/p>"}, {"label": "What I'll do", "html": "<p>I will start with a person or a story, not a chart. I will choose the right emotion. (<em>Made to Stick<\/em>: teenagers quit smoking more because they were angry at tobacco companies than because they were afraid of disease.)<\/p>"}]}]}, {"name": "Relationships", "title": "Relationships: the people I work with", "kind": "branch", "intro": "<p>Persuasion is what I say. Relationships decide whether anyone listens. In the Leverage Inventory, this group has two parts: <strong>Negotiation<\/strong> (dealing with one person at a time) and <strong>Structure<\/strong> (the larger group of people around me). Much of the real power in these readings comes from relationships: Lincoln's cabinet of former rivals, LBJ's Little Congress, and the alliance of Pacific island nations. This is also where Erik Peterson failed: good work, weak relationships.<\/p>", "children": [{"name": "Negotiation", "title": "Negotiation: one person at a time", "kind": "branch", "intro": "<p>How I deal with one other person: understanding them, trading with them, and pushing when needed.<\/p>", "children": [{"name": "Allocentrism", "key": "See the situation from their side.", "steps": [{"label": "Concept", "html": "<p>Allocentrism means focusing on other people's point of view (the opposite of egocentrism, which means focusing on yourself). It is close to empathy. Empathy is not weakness. It helps you predict what others will do.<\/p>"}, {"label": "Story", "html": "<p>In party meetings, Lincoln listened first. Then he explained what the other party would do next and how to beat them, so clearly that his colleagues \"wondered why they had not seen it.\" He did not attack Southerners as bad people. But his empathy failed when he had no real contact with a group: he first planned to send freed slaves to other countries, without understanding how much they loved America. After meeting Frederick Douglass and Black soldiers, he dropped the idea. In East Timor, de Mello took lessons in the local language, Tetum, several times a week.<\/p>"}, {"label": "My experience", "html": "<p>During my internship at China Merchants Securities, I tried to persuade a client to put part of their investment into new energy: electric cars and batteries. When I talked with the client, I learned that they strongly preferred gasoline cars and did not want to change.<\/p><p>I did not argue with them at first. I said that I understood their view, and I told them that I had the same feeling myself. But I also said that when an idea is tied to investment and the economy, personal beliefs can sometimes be compromised.<\/p><p>Then I shared my own experience. I had tried electric cars and knew their real running costs, and these costs come from the everyday life of ordinary people. After that, I added more reasons. Today, people's decisions about buying a car are deeply shaped by the internet and social media. A good online reputation can raise a brand's sales a lot, and a bad one can hurt them just as much. Social media is promoting these brands more and more. First-tier cities (the biggest cities in China) are also giving more support to new energy. This can raise these companies' profits and stock prices, so I believed they would grow a lot in the next few years. In the end, the client really moved part of their money into new energy.<\/p><p><strong>What I learned:<\/strong> I first agreed with the client's feeling, then started from my own real experience, and only then added the data. Here, seeing the other side did not make me give up my view. It helped me make my view easier to accept.<\/p>"}, {"label": "Quote", "html": "<p>\"They are just what we would be in their situation.\" (Lincoln, about Southerners)<\/p><p>\"Language is the key to a people's culture, and culture is the key to a people's heart.\" (de Mello)<\/p>"}, {"label": "What I'll do", "html": "<p>From now on, before I try to change someone's mind, I will first ask what they believe and why, and say it back to them in one sentence. Then I will choose one real example and one or two facts that answer their worry, not mine. After the talk, I will check: did I understand their view and still keep my own?<\/p>"}]}, {"name": "Exchange", "key": "Give first, and don't hold grudges.", "steps": [{"label": "Concept", "html": "<p>Exchange means trading favors. People want to repay what they receive (the rule of reciprocity), so give first what you hope to get. Lincoln went beyond simple trading: he forgave people who hurt him.<\/p>"}, {"label": "Story", "html": "<p>A veterans' charity got an 18% response to a normal donation letter. When it added a small free gift (address labels), the response rose to 35%. Lincoln traded government jobs for votes on the 13th Amendment, which ended slavery. He also gave Edwin Stanton, a lawyer who had once insulted and humiliated him, the important job of Secretary of War. Stanton later loved and respected him. In 1855 Lincoln gave up a Senate race to help a rival win, and those people later helped him become president. LBJ got 50 government jobs for his weak boss because powerful officials liked him and wanted to help.<\/p>"}, {"label": "Quote", "html": "<p>\"Give what you want to receive.\" (Cialdini)<\/p><p>\"If any man ceases to attack me, I never remember the past against him.\" (Lincoln)<\/p><p class=\"plain\">Plain meaning: if someone stops attacking me, I forget what they did before.<\/p>"}, {"label": "What I'll do", "html": "<p>I will help people before I need anything from them. When someone hurts me but then stops, I will let it go. A former opponent can become a strong ally.<\/p>"}]}, {"name": "Might", "key": "Be firm when needed, then repair.", "steps": [{"label": "Concept", "html": "<p>Might means being willing to use pressure or force, to face difficult issues, and to accept conflict. With too little might, people do not take you seriously. Use it when needed, then repair the relationship.<\/p>"}, {"label": "Story", "html": "<p>Attorney General Bates complained that nobody was afraid of Lincoln. But Lincoln removed general after general until he found Grant, and he strongly criticized General Milroy. Then he softened: after an angry note to General Sigel, he wrote, \"I was a little cross, I ask pardon.\" In East Timor, after a UN soldier from New Zealand was killed, de Mello made the rules stronger so soldiers could act faster against armed groups. In Pfeffer's book, Anne told her start-up team she would leave if her rival became CEO. She had a real job offer elsewhere, so the threat was believable.<\/p>"}, {"label": "My experience", "html": "<p>In my capstone project, my team worked with the Environmental Services Department of the City of San Diego. When we used Python to extract the data, I suggested pulling the daily data for each month, and then building the final visualization from it. Some teammates wanted to use three-month periods instead. I did not hold my position, and I agreed with them.<\/p><p>At the final presentation, I regretted it. Each bar in our chart stood for three months, so the chart did not show enough information or the real trend. It could not show how much the data changed, so I could not give a more accurate analysis.<\/p><p><strong>What I learned:<\/strong> I had a good reason, but I gave it up because I did not want to disagree. Might does not mean being rude. It means saying \"I think we should keep the monthly data, and here is why\" before the decision is final.<\/p>"}, {"label": "Quote", "html": "<p>\"He makes no body afraid of him.\" (Bates, about Lincoln)<\/p><p class=\"plain\">Plain meaning: \"no body\" is old spelling for \"nobody.\" Nobody is afraid of him.<\/p><p>\"Let them try again, and they will get the same response.\" (de Mello, to armed groups)<\/p>"}, {"label": "What I'll do", "html": "<p>From now on, whenever a team wants to drop my idea, I will not agree at once. I will make one quick example of both options (for example, a monthly chart and a three-month chart) and show them side by side, so the data can decide. After each team meeting, I will check: did I give up an idea without showing my reason?<\/p>"}]}]}, {"name": "Structure", "title": "Structure: many people at once", "kind": "branch", "intro": "<p>Influence is not only one-on-one. It also depends on my network, my alliances, and the teams I keep together.<\/p>", "children": [{"name": "Networks", "key": "Build relationships before you need them.", "steps": [{"label": "Concept", "html": "<p>A network is a wide set of informal relationships with many kinds of people. Networks bring information and access. People also prefer what is familiar to them (the <em>mere exposure effect<\/em>), so being known helps you get chosen.<\/p>"}, {"label": "Story", "html": "<p>At 24, LBJ was only an assistant to a congressman. He took over the \"Little Congress,\" a boring club for assistants, and turned it into weekly events with famous speakers. This gave him a reason to meet powerful politicians, and they remembered him. Soon even the Postmaster General, who controlled government jobs, liked him. Stanton moved the military telegraph office next to his own office, so all war news came to him, and Lincoln visited him every day. Erik Peterson did the opposite: he avoided Green and Cantor after two bad meetings.<\/p>"}, {"label": "Quote", "html": "<p>\"Once he got in to see somebody, the Chief, being the way he was, would make them remember him.\" (LBJ's assistant, in Caro)<\/p><p class=\"plain\">Plain meaning: \"the Chief\" is LBJ. Once he met someone, he made sure they remembered him.<\/p><p>\"You can't select what you can't recall.\" (Pfeffer)<\/p><p class=\"plain\">Plain meaning: people cannot choose you if they don't remember you.<\/p>"}, {"label": "What I'll do", "html": "<p>I will keep a short list of people I should stay in touch with, including senior people and people I had problems with. I will contact one of them each week, when I don't need anything. I will find where important information flows and try to stay close to it.<\/p>"}]}, {"name": "Coalitions", "key": "Small players become strong together.", "steps": [{"label": "Concept", "html": "<p>A coalition is a group of people or organizations that support the same goal, especially people from different groups. Many weak players can become one strong player. Partners with different strengths also cover each other's weaknesses.<\/p>"}, {"label": "Story", "html": "<p>Eight small Pacific island nations sold fishing rights to rich countries. The rich countries played them against each other to get low prices. When the islands acted as one group (the PNA), they controlled about half of the world's skipjack tuna. They sold fishing days in auctions, and the price rose from $400 to $6,000 a day. LBJ defeated Vice President Garner by getting all 21 Texas congressmen and both Texas senators to sign one agreement about government jobs. He gave the senators a small extra benefit to join. Then he gave the agreement to the press. Lincoln put his three main rivals in his cabinet. He and Stanton were very different, but they worked very well together.<\/p>"}, {"label": "Quote", "html": "<p>\"Everybody had to realize that the whole issue was a game of divide-and-conquer... There's strength in numbers.\" (President Remengesau of Palau)<\/p><p class=\"plain\">Plain meaning: the strong countries won by keeping the small ones divided. Together, the small ones were strong.<\/p>"}, {"label": "What I'll do", "html": "<p>When I am the weaker side, I will look for others with the same problem before I negotiate alone. I will find a small benefit that brings the last people into the group. I will work with people who are strong where I am weak.<\/p>"}]}, {"name": "Team-building", "key": "Let respected peers spread the idea.", "steps": [{"label": "Concept", "html": "<p>Team-building means building groups and keeping them united. People commit more to choices they make freely and to ideas their peers support (Cialdini: <em>social proof<\/em> and <em>consistency<\/em>).<\/p>"}, {"label": "Story", "html": "<p>Many Google engineers thought managers were useless. Project Oxygen did not order them to change. It used Google's own data (the team tried to prove managers don't matter, and failed). Respected senior engineers presented the results, not HR. Manager feedback was used for learning, not for pay or promotion. Managers chose their own training. Average favorable scores rose from 83% to 88%. But when Google built a very accurate formula to decide promotions, engineers refused to use it. They wanted to own their decisions. Lincoln united his arguing cabinet by asking them to defend one member, Seward, against criticism from outside.<\/p>"}, {"label": "Quote", "html": "<p>\"We have a consensus-oriented culture. Commanding employees to do something doesn't work.\" (Michelle Donovan, Project Oxygen)<\/p><p>\"They didn't want to hide behind a black box, they wanted to own the decisions they made.\" (Prasad Setty, Google)<\/p><p class=\"plain\">Plain meaning: a \"black box\" is a system whose inner workings you cannot see. Engineers wanted to make the decisions themselves.<\/p>"}, {"label": "What I'll do", "html": "<p>To change a group, I will find a respected member to support the idea, because influence works best between peers. I will ask for commitments that are active, public and voluntary (spoken or written, shared with others, and freely chosen). I will let people own the final decision.<\/p>"}]}]}]}, {"name": "Meta-tools", "title": "Meta-tools: how and when to use the other tools", "kind": "branch", "intro": "<p>These three tools guide all the others. They decide <em>what<\/em> I want, <em>when<\/em> I act, and whether I accept the situation or try to change it.<\/p>", "children": [{"name": "Intentionality", "key": "Keep one main goal in mind.", "steps": [{"label": "Concept", "html": "<p>Intentionality means acting with a clear goal and following it strongly, while ignoring distractions, small fights and pride.<\/p>"}, {"label": "Story", "html": "<p>During the Civil War, some people wanted Lincoln to end slavery immediately and others wanted him to leave it alone. Newspaper editor Horace Greeley publicly attacked him. Lincoln answered very clearly: everything he did about slavery served one goal, saving the Union (keeping the United States together). Because the goal was clear, he could ignore insults and personal pride. He even said he would hold the horse of his rude general McClellan if it brought a victory. Erik Peterson, in contrast, tried to fight every problem at once.<\/p>"}, {"label": "My experience", "html": "<p>After I started studying business analytics, I sometimes regretted that I did not choose engineering. At that time, I thought engineering could create real, solid results, while analytics felt too much like words and stayed too close to the surface. This made me disappointed.<\/p><p>Later, I slowly learned that analytics and engineering share some features. First, both need a careful, almost perfectionist way of thinking. I must be exact, and I must support what I say with evidence when I explain and summarize my findings. Second, both can create something real that people use. In my capstone, our results are a real deliverable to the City of San Diego, and the City may use them when it considers future projects. This helped me feel better. Analytics is a big and wide field, and some of its smaller areas can also let me create real output and get real results.<\/p><p><strong>What I learned:<\/strong> My doubt pulled me in two directions. Intentionality means choosing one main goal and letting it guide the small choices. My goal is clear: an analyst job in the US that matches my major. So the useful question is not \"Should I have chosen engineering?\" but \"Which part of analytics lets me build real things?\"<\/p>"}, {"label": "Quote", "html": "<p>\"My paramount object in this struggle is to save the Union, and it is not either to save or to destroy slavery.\" (Lincoln, letter to Greeley)<\/p><p class=\"plain\">Plain meaning: \"paramount object\" means most important goal.<\/p>"}, {"label": "What I'll do", "html": "<p>From now on, I will build on the major I have chosen instead of looking back. When a task feels like it stays on the surface, I will look for the part where I can build something real, such as a database, a data pipeline, or a model that someone actually uses. When I choose projects, courses, or jobs, I will ask one question: does this bring me closer to an analyst job? At the end of each month, I will write down one real thing I built or one real result I helped produce.<\/p>"}]}, {"name": "Situation Awareness", "key": "Understand the situation and the timing.", "steps": [{"label": "Concept", "html": "<p>Situation awareness means noticing what is happening around me, understanding what it means, and predicting what will happen next. This includes knowing what powerful people really care about. Good timing is part of a good message.<\/p>"}, {"label": "Story", "html": "<p>Lincoln had a draft of the Emancipation Proclamation (the order to free slaves) ready. But Secretary of State Seward warned that announcing it after military defeats would look like a weak \"last shriek\" (a desperate last cry). Lincoln waited for a victory. He also met ordinary citizens often and called these meetings his \"public opinion baths.\" Rudy Crew was named the best school superintendent in the United States, and was fired a few months later. He misunderstood what his school board cared about: contracts, jobs, and respect. Pfeffer's advice: ask your bosses regularly what matters most to them.<\/p>"}, {"label": "Quote", "html": "<p>\"Had the proclamation been issued even six months earlier than it was, public sentiment would not have sustained it.\" (Lincoln)<\/p><p class=\"plain\">Plain meaning: six months earlier, the public would not have supported it.<\/p>"}, {"label": "What I'll do", "html": "<p>Before a big move, I will ask: Is this the right time? What does my boss care about that I might be missing? I will regularly talk with frontline workers and with people outside my group.<\/p>"}]}, {"name": "Agency", "key": "Many rules can be changed.", "steps": [{"label": "Concept", "html": "<p>Agency means shaping the situation instead of accepting it. A person with agency questions the usual way of doing things and treats rules as something that can be changed.<\/p>"}, {"label": "Story", "html": "<p>In the Little Congress, leaders were normally chosen by seniority, with no competition. LBJ read the club's official rules (the bylaws) and found that mail carriers, police officers and elevator operators who worked for Congress could also vote. He quietly brought them to the meeting and won the election. The Pacific island nations changed the rules of the ocean: boats could get fishing licenses only if they also stayed out of certain international waters. Anne took her start-up class in the engineering school, where MBA students were rare and therefore valuable. De Mello broke UN rules to share power with the local leaders of East Timor, and his influence grew when he gave power away.<\/p>"}, {"label": "Quote", "html": "<p>\"If you think inside the box, very little meaningful change will happen.\" (President Remengesau of Palau)<\/p><p class=\"plain\">Plain meaning: if you only follow the usual way of thinking, little will change.<\/p><p>\"Local people have little time for rules. They want results.\" (de Mello)<\/p>"}, {"label": "What I'll do", "html": "<p>When someone says \"this is how we always do it,\" I will read the actual rules myself. I will ask which limits are real and which are only habits. I will look for places where my skills are rare and valuable.<\/p>"}]}]}]};
+// =====================================================================
+
+(function () {
+  const container = document.getElementById("node-tree");
+  const css = getComputedStyle(document.documentElement);
+  const branchColor = [css.getPropertyValue("--c1").trim(), css.getPropertyValue("--c2").trim(), css.getPropertyValue("--c3").trim()];
+  const rootColor = css.getPropertyValue("--root").trim();
+  const navy = css.getPropertyValue("--navy").trim();
+
+  // ---- build node objects ----
+  let nextId = 0;
+  function build(data, parent, depth, branch) {
+    const node = Object.assign({}, data, { id: nextId++, parent, depth, expanded: false, shown: 0 });
+    node.branch = depth === 1 ? (parent.kids ? parent.kids.length : 0) : branch;
+    node.kids = [];
+    (data.children || []).forEach(c => node.kids.push(build(c, node, depth + 1, node.branch)));
+    delete node.children;
+    if (node.kind !== "root" && node.kind !== "branch") node.kind = "leaf";
+    return node;
+  }
+  const root = build(treeData, null, 0, 0);
+  // fix branch indices for depth-1 nodes (built before being pushed)
+  root.kids.forEach((k, i) => { (function set(n) { n.branch = i; n.kids.forEach(set); })(k); });
+
+  const color = d => d.depth === 0 ? rootColor : branchColor[d.branch % branchColor.length];
+  const radius = d => d.kind === "root" ? 28 : d.kind === "branch" ? (d.depth === 1 ? 19 : 15) : 10;
+  const totalSteps = d => d.kind === "branch" ? 1 : d.steps.length;
+  const isDone = d => d.shown >= totalSteps(d);
+
+  // ---- svg + zoom ----
+  const svg = d3.select(container).append("svg");
+  const world = svg.append("g");
+  const zoom = d3.zoom().scaleExtent([0.35, 2.5]).on("zoom", e => world.attr("transform", e.transform));
+  svg.call(zoom).on("dblclick.zoom", null);
+  const linkLayer = world.append("g");
+  const nodeLayer = world.append("g");
+
+  // Fit all visible nodes into the free area (not covered by the panel).
+  function freeArea() {
+    const W = container.clientWidth, H = container.clientHeight, top = 52;
+    if (panel.hidden) return { x: 0, y: top, w: W, h: H - top };
+    if (window.innerWidth <= 760) return { x: 0, y: top, w: W, h: H - panel.offsetHeight - top - 16 };
+    return { x: 0, y: top, w: W - panel.offsetWidth - 32, h: H - top };
+  }
+  function recenter(animate = true) {
+    const ns = visible().nodes;
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    ns.forEach(n => { const r = radius(n);
+      x0 = Math.min(x0, n.x - r - 55); x1 = Math.max(x1, n.x + r + 55);
+      y0 = Math.min(y0, n.y - r - 10); y1 = Math.max(y1, n.y + r + 36); });
+    const a = freeArea(), pad = 16;
+    const k = Math.max(0.35, Math.min(1.15, (a.w - 2 * pad) / (x1 - x0), (a.h - 2 * pad) / (y1 - y0)));
+    const t = d3.zoomIdentity.translate(a.x + a.w / 2 - k * (x0 + x1) / 2, a.y + a.h / 2 - k * (y0 + y1) / 2).scale(k);
+    (animate ? svg.transition().duration(550) : svg).call(zoom.transform, t);
+  }
+  let fitTimer = null;
+  function fitSoon() { clearTimeout(fitTimer); fitTimer = setTimeout(() => recenter(true), 700); }
+  root.x = root.fx = 0; root.y = root.fy = 0;
+
+  const sim = d3.forceSimulation()
+    .force("link", d3.forceLink().id(d => d.id)
+      .distance(l => l.target.kind === "leaf" ? 95 : l.target.depth === 1 ? 150 : 115).strength(0.9))
+    .force("charge", d3.forceManyBody().strength(d => d.kind === "leaf" ? -260 : -520))
+    .force("collide", d3.forceCollide().radius(d => radius(d) + (d.kind === "leaf" ? 30 : 34)))
+    .on("tick", ticked);
+
+  function visible() {
+    const nodes = [], links = [];
+    (function walk(n) { nodes.push(n); if (n.expanded) n.kids.forEach(k => { links.push({ source: n, target: k }); walk(k); }); })(root);
+    return { nodes, links };
+  }
+  function collapse(n) { n.expanded = false; n.kids.forEach(collapse); }
+
+  let selected = null;
+  function onClick(event, d) {
+    event.stopPropagation();
+    const before = visible().nodes.length;
+    if (d.kind === "root") {
+      // root never collapses: first click opens the tree, later clicks show the next part
+      if (!d.expanded) d.expanded = true;
+      if (d.shown === 0) d.shown = 1;
+      else if (selected === d && !isDone(d)) d.shown += 1;
+      d.kids.forEach((k, i) => { if (k.x === undefined) { const a = (i / d.kids.length) * 2 * Math.PI - Math.PI / 2; k.x = Math.cos(a) * 12; k.y = Math.sin(a) * 12; } });
+    } else if (d.kids.length) {
+      if (d.expanded && selected === d) { collapse(d); }
+      else if (!d.expanded) {
+        d.expanded = true;
+        d.kids.forEach((k, i) => {
+          const a = (i / d.kids.length) * 2 * Math.PI + (d.depth ? Math.atan2(d.y - (d.parent ? d.parent.y : 0), d.x - (d.parent ? d.parent.x : 0)) - Math.PI / 2 : -Math.PI / 2);
+          k.x = d.x + Math.cos(a) * 12; k.y = d.y + Math.sin(a) * 12;
+        });
+      }
+      if (d.shown === 0) d.shown = 1;
+    } else {
+      // leaf: first click opens Concept; each further click shows the next part
+      if (selected === d && !isDone(d)) d.shown += 1;
+      else if (d.shown === 0) d.shown = 1;
+    }
+
+    select(d);
+    update();
+    if (visible().nodes.length !== before) fitSoon();
+  }
+
+  let link, node;
+  function update() {
+    const { nodes, links } = visible();
+    link = linkLayer.selectAll("line").data(links, d => d.target.id)
+      .join(enter => enter.append("line").attr("class", "link"));
+
+    node = nodeLayer.selectAll("g.node").data(nodes, d => d.id)
+      .join(enter => {
+        const g = enter.append("g").attr("class", d => "node " + d.kind).on("click", onClick)
+          .call(d3.drag()
+            .on("start", (e, d) => { if (!e.active) sim.alphaTarget(0.25).restart(); d.fx = d.x; d.fy = d.y; })
+            .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
+            .on("end", (e, d) => { if (!e.active) sim.alphaTarget(0); if (d !== root) { d.fx = null; d.fy = null; } }));
+        g.append("circle").attr("class", "halo").attr("r", d => radius(d) + 7).attr("stroke", color);
+        g.append("circle").attr("class", "main").attr("r", 0).transition().duration(350).attr("r", radius);
+        g.append("text").attr("class", "label").attr("text-anchor", "middle")
+          .attr("dy", d => radius(d) + 17).text(d => d.name);
+        g.append("text").attr("class", "badge").attr("text-anchor", "middle").attr("dy", d => radius(d) + 31);
+        return g;
+      });
+
+    // filled = still has something to open (hidden children, or unread parts); ring = fully open
+    node.select("circle.main")
+      .attr("stroke", color)
+      .attr("fill", d => {
+        if (d.depth === 0) return d.expanded ? "#FFCD00" : color(d); // UCSD Yellow centre once open
+        if (d.kids.length) return d.expanded ? "#fff" : color(d);
+        return isDone(d) ? color(d) : "#fff";
+      })
+      .attr("stroke-width", d => d.kids.length && !d.expanded ? 2 : 3);
+    node.select("text.badge").text(d => d.kind === "leaf" && d.shown > 0 ? (isDone(d) ? "✓ read" : d.shown + " / " + d.steps.length) : "");
+    node.classed("selected", d => d === selected);
+
+    sim.nodes(nodes);
+    sim.force("link").links(links);
+    sim.alpha(0.7).restart();
+    updateHint();
+  }
+
+  function ticked() {
+    link.attr("x1", d => d.source.x).attr("y1", d => d.source.y).attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+    node.attr("transform", d => `translate(${d.x},${d.y})`);
+  }
+
+  // ---- panel ----
+  const panel = document.getElementById("panel");
+  const pCrumb = document.getElementById("panel-crumb"), pTitle = document.getElementById("panel-title"),
+        pKey = document.getElementById("panel-key"), pDots = document.getElementById("panel-dots"),
+        pBody = document.getElementById("panel-body"), pNext = document.getElementById("panel-next"),
+        pRestart = document.getElementById("panel-restart");
+
+  function crumb(d) { const a = []; let p = d.parent; while (p) { a.unshift(p.kind === "root" ? "Overview" : p.name); p = p.parent; } return a.join("  ›  "); }
+  function stepClass(label) { return /quote/i.test(label) ? "quote" : /what i'll do/i.test(label) ? "todo" : /^my /i.test(label) ? "mine" : ""; }
+
+  function select(d) {
+    const wasHidden = panel.hidden;
+    selected = d;
+    panel.hidden = false;
+    panel.style.setProperty("--accent", color(d));
+    // gold and turquoise are too light for text on white, so text and button labels use Navy there
+    const light = d.kind !== "root" && d.branch > 0;
+    panel.style.setProperty("--accent-ink", light ? navy : color(d));
+    panel.style.setProperty("--on-accent", light ? navy : "#fff");
+    render(d, true);
+    if (wasHidden || window.innerWidth <= 760) fitSoon();
+  }
+
+  function render(d, scrollToNew) {
+    pCrumb.textContent = d.kind === "root" ? "Overview" : crumb(d);
+    pTitle.textContent = d.kind === "leaf" ? d.name : d.title;
+    pKey.textContent = d.kind === "leaf" ? "“" + d.key + "”" : "";
+    pDots.innerHTML = "";
+    pBody.innerHTML = "";
+    if (d.kind === "branch") {
+      pBody.innerHTML = `<section>${d.intro}</section>` +
+        `<p class="done-note">${d.expanded ? "Its parts are now shown on the tree. Click one to open it." : "Click the circle again to open its parts."}</p>`;
+      pNext.hidden = true; pRestart.hidden = true;
+      return;
+    }
+    d.steps.forEach((s, i) => {
+      const dot = document.createElement("span");
+      dot.textContent = s.label.replace(/\s*\(.*\)$/, "").replace(/:.*$/, "");
+      if (i < d.shown) dot.className = "on";
+      pDots.appendChild(dot);
+    });
+    let last = null;
+    d.steps.slice(0, d.shown).forEach((s) => {
+      const sec = document.createElement("section");
+      sec.className = stepClass(s.label);
+      sec.innerHTML = `<h3>${s.label}</h3>${s.html}`;
+      pBody.appendChild(sec);
+      last = sec;
+    });
+    if (isDone(d)) {
+      pNext.hidden = true;
+      pRestart.hidden = false;
+      const note = document.createElement("p");
+      note.className = "done-note";
+      note.textContent = d.kind === "root" ? "That's the overview. Open the branches on the tree to continue." : "This card is complete.";
+      pBody.appendChild(note);
+    } else {
+      pNext.hidden = false;
+      pRestart.hidden = true;
+      pNext.textContent = "Show " + d.steps[d.shown].label.replace(/\s*\(.*\)$/, "").replace(/:.*$/, "") + "  →";
+    }
+    if (scrollToNew && last && d.shown > 1) last.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  pNext.addEventListener("click", () => {
+    if (!selected || isDone(selected)) return;
+    selected.shown += 1; render(selected, true); update(); if (window.innerWidth <= 760) fitSoon();
+  });
+  pRestart.addEventListener("click", () => {
+    if (!selected) return;
+    selected.shown = 1; render(selected, false); panel.scrollTop = 0; update();
+  });
+  document.getElementById("panel-close").addEventListener("click", () => {
+    panel.hidden = true; selected = null; update(); recenter();
+  });
+  document.getElementById("reset-view").addEventListener("click", () => recenter());
+  window.addEventListener("resize", () => recenter(false));
+
+  const hint = document.getElementById("hint");
+  function updateHint() {
+    if (!root.expanded) hint.textContent = "Click the center circle to start";
+    else if (selected && selected.kind !== "branch" && !isDone(selected)) hint.textContent = "Click the same circle again (or the button) to see the next part";
+    else hint.textContent = "Click a circle to open it · drag to move · scroll to zoom";
+  }
+
+  update();
+  recenter(false);
+})();
+</script>
+
+```

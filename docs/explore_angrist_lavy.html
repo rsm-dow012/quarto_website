@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -108,6 +108,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -306,7 +309,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./blogs.html"> 
-<span class="menu-text">Blog</span></a>
+<span class="menu-text">Blogs</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -398,12 +401,314 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Schools: 1015</code></pre>
 </div>
 </div>
-<div id="cell-3" class="cell">
+<div id="cell-3" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">schlcode</th>
+<th data-quarto-table-cell-role="th">c_size</th>
+<th data-quarto-table-cell-role="th">c_boys</th>
+<th data-quarto-table-cell-role="th">c_girls</th>
+<th data-quarto-table-cell-role="th">c_numcl</th>
+<th data-quarto-table-cell-role="th">c_pik</th>
+<th data-quarto-table-cell-role="th">c_status</th>
+<th data-quarto-table-cell-role="th">c_leom</th>
+<th data-quarto-table-cell-role="th">c_tip</th>
+<th data-quarto-table-cell-role="th">c_num4rd</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">verb_n</th>
+<th data-quarto-table-cell-role="th">flverb_n</th>
+<th data-quarto-table-cell-role="th">nverb_n</th>
+<th data-quarto-table-cell-role="th">impute</th>
+<th data-quarto-table-cell-role="th">nverb_m</th>
+<th data-quarto-table-cell-role="th">nmath_m</th>
+<th data-quarto-table-cell-role="th">tip_s</th>
+<th data-quarto-table-cell-role="th">townid</th>
+<th data-quarto-table-cell-role="th">tipuach</th>
+<th data-quarto-table-cell-role="th">fsc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>11005</td>
+<td>35</td>
+<td>12</td>
+<td>23</td>
+<td>9</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>5</td>
+<td>1</td>
+<td>...</td>
+<td>65.769997</td>
+<td>17.100000</td>
+<td>35.0</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>24.0</td>
+<td>26104.0</td>
+<td>24</td>
+<td>35.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>11006</td>
+<td>54</td>
+<td>23</td>
+<td>31</td>
+<td>12</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>7</td>
+<td>2</td>
+<td>...</td>
+<td>61.406532</td>
+<td>30.595919</td>
+<td>49.0</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>38.0</td>
+<td>26104.0</td>
+<td>38</td>
+<td>27.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>11006</td>
+<td>54</td>
+<td>23</td>
+<td>31</td>
+<td>12</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>7</td>
+<td>2</td>
+<td>...</td>
+<td>61.406532</td>
+<td>30.595919</td>
+<td>49.0</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>38.0</td>
+<td>26104.0</td>
+<td>38</td>
+<td>27.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>11009</td>
+<td>38</td>
+<td>15</td>
+<td>23</td>
+<td>6</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>...</td>
+<td>78.370003</td>
+<td>13.200000</td>
+<td>38.0</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>6.0</td>
+<td>4622.0</td>
+<td>6</td>
+<td>38.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>11010</td>
+<td>73</td>
+<td>40</td>
+<td>33</td>
+<td>15</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td>2</td>
+<td>...</td>
+<td>74.485001</td>
+<td>20.000000</td>
+<td>70.0</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3.0</td>
+<td>30007.0</td>
+<td>3</td>
+<td>36.50</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2054</th>
+<td>61359</td>
+<td>133</td>
+<td>73</td>
+<td>60</td>
+<td>14</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td>4</td>
+<td>...</td>
+<td>73.947678</td>
+<td>14.729457</td>
+<td>129.0</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3.0</td>
+<td>703.0</td>
+<td>3</td>
+<td>33.75</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2055</th>
+<td>61363</td>
+<td>29</td>
+<td>16</td>
+<td>13</td>
+<td>7</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td>2</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>22</td>
+<td>21.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2056</th>
+<td>61364</td>
+<td>66</td>
+<td>41</td>
+<td>25</td>
+<td>15</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td>2</td>
+<td>...</td>
+<td>80.966248</td>
+<td>0.000000</td>
+<td>56.0</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0</td>
+<td>33.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2057</th>
+<td>61364</td>
+<td>66</td>
+<td>41</td>
+<td>25</td>
+<td>15</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td>2</td>
+<td>...</td>
+<td>80.966248</td>
+<td>0.000000</td>
+<td>56.0</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0</td>
+<td>33.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2058</th>
+<td>61365</td>
+<td>20</td>
+<td>16</td>
+<td>4</td>
+<td>6</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td>1</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>60</td>
+<td>20.00</td>
+</tr>
+</tbody>
+</table>
+
+<p>2053 rows × 52 columns</p>
+</div>
+</div>
 </div>
 <section id="summary-statistics-for-key-variables" class="level2">
 <h2 class="anchored" data-anchor-id="summary-statistics-for-key-variables">1. Summary statistics for key variables</h2>
-<div id="cell-5" class="cell">
+<div id="cell-5" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>key_vars <span class="op">=</span> [<span class="st">'cohsize'</span>, <span class="st">'classize'</span>, <span class="st">'fsc'</span>, <span class="st">'avgverb'</span>, <span class="st">'avgmath'</span>, <span class="st">'tipuach'</span>]</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>labels   <span class="op">=</span> [<span class="st">'Enrollment'</span>, <span class="st">'Actual class size'</span>, <span class="st">'Maimonides predicted size'</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Avg reading score'</span>, <span class="st">'Avg math score'</span>, <span class="st">'</span><span class="sc">% d</span><span class="st">isadvantaged'</span>]</span>
@@ -411,11 +716,73 @@ Schools: 1015</code></pre>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> df[key_vars].describe().T[[<span class="st">'mean'</span>,<span class="st">'std'</span>,<span class="st">'min'</span>,<span class="st">'max'</span>]].<span class="bu">round</span>(<span class="dv">2</span>)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>summary.index <span class="op">=</span> labels</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Enrollment</th>
+<td>75.07</td>
+<td>36.03</td>
+<td>8.00</td>
+<td>213.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Actual class size</th>
+<td>30.29</td>
+<td>6.41</td>
+<td>7.00</td>
+<td>52.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Maimonides predicted size</th>
+<td>30.78</td>
+<td>5.91</td>
+<td>8.00</td>
+<td>40.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Avg reading score</th>
+<td>72.46</td>
+<td>7.98</td>
+<td>24.29</td>
+<td>94.90</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Avg math score</th>
+<td>68.83</td>
+<td>8.77</td>
+<td>21.41</td>
+<td>94.09</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">% disadvantaged</th>
+<td>13.86</td>
+<td>13.37</td>
+<td>0.00</td>
+<td>76.00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="distribution-of-enrollment-the-running-variable" class="level2">
 <h2 class="anchored" data-anchor-id="distribution-of-enrollment-the-running-variable">2. Distribution of enrollment (the running variable)</h2>
-<div id="cell-7" class="cell">
+<div id="cell-7" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">4</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ax.hist(df[<span class="st">'cohsize'</span>], bins<span class="op">=</span><span class="dv">50</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, edgecolor<span class="op">=</span><span class="st">'white'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -429,12 +796,19 @@ Schools: 1015</code></pre>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="explore_angrist_lavy_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="actual-vs.-maimonides-predicted-class-size-figure-1-panel-b-preview" class="level2">
 <h2 class="anchored" data-anchor-id="actual-vs.-maimonides-predicted-class-size-figure-1-panel-b-preview">3. Actual vs.&nbsp;Maimonides predicted class size (Figure 1 Panel B preview)</h2>
 <p>Average actual class size and Maimonides Rule by enrollment count.</p>
-<div id="cell-9" class="cell">
+<div id="cell-9" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average actual class size and fsc by each enrollment value</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>by_enroll <span class="op">=</span> df.groupby(<span class="st">'cohsize'</span>).agg(</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    actual<span class="op">=</span>(<span class="st">'classize'</span>, <span class="st">'mean'</span>),</span>
@@ -455,11 +829,18 @@ Schools: 1015</code></pre>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="dv">5</span>, <span class="dv">45</span>)</span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="explore_angrist_lavy_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="test-scores-vs.-actual-class-size-naive-ols-picture" class="level2">
 <h2 class="anchored" data-anchor-id="test-scores-vs.-actual-class-size-naive-ols-picture">4. Test scores vs.&nbsp;actual class size (naive OLS picture)</h2>
-<div id="cell-11" class="cell">
+<div id="cell-11" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">4</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, yvar, title <span class="kw">in</span> <span class="bu">zip</span>(axes,</span>
@@ -482,11 +863,18 @@ Schools: 1015</code></pre>
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Naive OLS: Test scores vs. class size (4th grade)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="explore_angrist_lavy_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="test-scores-vs.-maimonides-predicted-class-size-reduced-form-rdd-picture" class="level2">
 <h2 class="anchored" data-anchor-id="test-scores-vs.-maimonides-predicted-class-size-reduced-form-rdd-picture">5. Test scores vs.&nbsp;Maimonides predicted class size (reduced-form RDD picture)</h2>
-<div id="cell-13" class="cell">
+<div id="cell-13" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">4</span>))</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, yvar, title <span class="kw">in</span> <span class="bu">zip</span>(axes,</span>
@@ -512,11 +900,18 @@ Schools: 1015</code></pre>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Reduced-form: Test scores vs. Maimonides predicted class size'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="explore_angrist_lavy_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="quick-ols-numbers-table-ii-cols-7-10-preview" class="level2">
 <h2 class="anchored" data-anchor-id="quick-ols-numbers-table-ii-cols-7-10-preview">6. Quick OLS numbers (Table II cols 7 &amp; 10 preview)</h2>
-<div id="cell-15" class="cell">
+<div id="cell-15" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ols_clustered(y, X, clusters):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""OLS with cluster-robust standard errors."""</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    XtX_inv <span class="op">=</span> np.linalg.inv(X.T <span class="op">@</span> X)</span>
@@ -550,11 +945,56 @@ Schools: 1015</code></pre>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    })</span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(results).set_index(<span class="st">'Outcome'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Class size coef</th>
+<th data-quarto-table-cell-role="th">Std error</th>
+<th data-quarto-table-cell-role="th">RMSE</th>
+<th data-quarto-table-cell-role="th">R²</th>
+<th data-quarto-table-cell-role="th">N</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Outcome</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Reading (col 7)</th>
+<td>0.132</td>
+<td>0.035</td>
+<td>7.94</td>
+<td>0.011</td>
+<td>2049</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Math (col 10)</th>
+<td>0.207</td>
+<td>0.039</td>
+<td>8.67</td>
+<td>0.023</td>
+<td>2049</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="quick-reduced-form-numbers-table-iii-panel-a-cols-7-9-11-preview" class="level2">
 <h2 class="anchored" data-anchor-id="quick-reduced-form-numbers-table-iii-panel-a-cols-7-9-11-preview">7. Quick reduced-form numbers (Table III Panel A cols 7, 9, 11 preview)</h2>
-<div id="cell-17" class="cell">
+<div id="cell-17" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>results_rf <span class="op">=</span> []</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>specs <span class="op">=</span> [</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'classize'</span>, <span class="st">'Class size (col 7)'</span>),</span>
@@ -577,6 +1017,59 @@ Schools: 1015</code></pre>
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    })</span>
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(results_rf).set_index(<span class="st">'Outcome'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">fsc coef</th>
+<th data-quarto-table-cell-role="th">Std error</th>
+<th data-quarto-table-cell-role="th">RMSE</th>
+<th data-quarto-table-cell-role="th">R²</th>
+<th data-quarto-table-cell-role="th">N</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Outcome</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Class size (col 7)</th>
+<td>0.845</td>
+<td>0.024</td>
+<td>3.84</td>
+<td>0.641</td>
+<td>2053</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Reading (col 9)</th>
+<td>-0.099</td>
+<td>0.030</td>
+<td>6.62</td>
+<td>0.312</td>
+<td>2049</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Math (col 11)</th>
+<td>0.019</td>
+<td>0.039</td>
+<td>7.84</td>
+<td>0.201</td>
+<td>2049</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 
 
